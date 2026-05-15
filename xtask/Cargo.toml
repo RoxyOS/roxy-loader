@@ -10,3 +10,4 @@ clap = { version = "4.6.1", features = ["derive"] }
 workspace_root = "0.2.0"
 xshell = "0.2.7"
 image-builder.workspace = true
+qemu-command-builder = "11.0.0-1"
