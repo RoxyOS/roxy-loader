@@ -13,7 +13,9 @@ use crate::utils::{cargo_target_dir, run_qemu};
 
 const QEMU_BINARY_NAME: &str = "qemu-system-x86_64";
 
-pub fn run_vm(image: PathBuf) -> Result<ExitStatus> {
+pub type VMResult = Result<ExitStatus>;
+
+pub fn run_vm(image: PathBuf) -> VMResult {
     let (ovmf_code, ovmf_vars) = fetch_ovmf()?;
 
     let code_drive = Drive::builder()
