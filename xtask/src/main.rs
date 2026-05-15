@@ -21,7 +21,7 @@ mod private {
 }
 
 fn main() -> Result<()> {
-    chdir_to_workspace_root();
+    chdir_to_workspace_root()?;
 
     let args = Args::parse();
 
