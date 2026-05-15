@@ -1,5 +1,5 @@
 [workspace]
-members = ["image-builder","runner", "xtask"]
+members = ["image-builder", "xtask"]
 
 [package]
 name = "roxy-loader"
