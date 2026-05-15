@@ -1,0 +1,10 @@
+[package]
+name = "runner"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.102"
+ovmf-prebuilt = "0.2.8"
+qemu-command-builder = "11.0.0-1"
+thiserror = "2.0.18"
