@@ -1,4 +1,6 @@
 use clap::Parser;
+use workspace_root::get_workspace_root;
+use xshell::Shell;
 
 use crate::{
     build::build,
@@ -13,6 +15,8 @@ pub mod command;
 pub mod run_basic_kernel;
 
 fn main() {
+    chdir_to_workspace_root();
+
     let args = Args::parse();
 
     match args.command {
@@ -20,4 +24,9 @@ fn main() {
         Command::Build => build(),
         Command::BuildImage => build_image(),
     }
+}
+
+fn chdir_to_workspace_root() {
+    let workspace_root = get_workspace_root();
+    Shell::new().unwrap().change_dir(workspace_root);
 }
