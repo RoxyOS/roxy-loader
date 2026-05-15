@@ -1717,6 +1717,7 @@ dependencies = [
  "anyhow",
  "cargo_metadata",
  "clap",
+ "image-builder",
  "workspace_root",
  "xshell",
 ]
