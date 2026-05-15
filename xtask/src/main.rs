@@ -29,7 +29,8 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn chdir_to_workspace_root() {
+fn chdir_to_workspace_root() -> Result<()> {
     let workspace_root = get_workspace_root();
-    Shell::new().unwrap().change_dir(workspace_root);
+    Shell::new()?.change_dir(workspace_root);
+    Ok(())
 }
