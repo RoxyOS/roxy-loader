@@ -1,7 +1,12 @@
-use std::path::PathBuf;
+use std::{
+    io,
+    path::PathBuf,
+    process::{Command, ExitStatus},
+};
 
 use anyhow::Result;
 use cargo_metadata::MetadataCommand;
+use qemu_command_builder::{QemuInstanceForX86_64, to_command::ToCommand};
 
 #[macro_export]
 macro_rules! run_command {
@@ -17,4 +22,17 @@ pub fn cargo_target_dir() -> Result<PathBuf> {
 
 fn cargo_metadata() -> Result<cargo_metadata::Metadata> {
     Ok(cargo_metadata::MetadataCommand::new().exec()?)
+}
+
+pub fn run_qemu(qemu_command: QemuInstanceForX86_64) -> Result<ExitStatus> {
+    let argv = qemu_command.to_command();
+    let [program, args @ ..] = argv.as_slice() else {
+        anyhow::bail!("run_qemu: empty qemu command")
+    };
+
+    Ok(Command::new(program)
+        .args(args)
+        .stdout(io::stdout())
+        .spawn()?
+        .wait()?)
 }
