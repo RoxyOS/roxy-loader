@@ -1718,6 +1718,7 @@ dependencies = [
  "cargo_metadata",
  "clap",
  "image-builder",
+ "ovmf-prebuilt",
  "qemu-command-builder",
  "workspace_root",
  "xshell",
