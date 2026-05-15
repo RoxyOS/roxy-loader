@@ -14,6 +14,7 @@ pub mod build;
 pub mod build_image;
 pub mod command;
 pub mod run_basic_kernel;
+pub mod run_vm;
 pub mod utils;
 
 mod private {
