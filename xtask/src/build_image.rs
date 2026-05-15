@@ -1,3 +1,5 @@
-pub fn build_image() {
+use anyhow::Result;
+
+pub fn build_image() -> Result<()> {
     todo!()
 }
