@@ -14,6 +14,11 @@ pub mod build;
 pub mod build_image;
 pub mod command;
 pub mod run_basic_kernel;
+pub mod utils;
+
+mod private {
+    pub use xshell;
+}
 
 fn main() -> Result<()> {
     chdir_to_workspace_root();
