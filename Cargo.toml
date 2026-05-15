@@ -1,5 +1,5 @@
 [workspace]
-members = ["runner"]
+members = ["image-builder","runner"]
 
 [package]
 name = "roxy-loader"
@@ -8,3 +8,6 @@ edition = "2024"
 
 [dependencies]
 uefi = { version = "0.37.0", features = ["panic_handler"] }
+
+[workspace.dependencies]
+image-builder.path = "./image-builder"
