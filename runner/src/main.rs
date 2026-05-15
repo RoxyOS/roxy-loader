@@ -24,7 +24,7 @@ mod error;
 mod qemu;
 
 const QEMU_BINARY_NAME: &str = "qemu-system-x86_64";
-const OVMF_DIR: &str = "../target/ovmf";
+const OVMF_DIR: &str = "target/ovmf";
 const BOOTLOADER_EFI_FILE_PATH: &str = "target/x86_64-unknown-uefi/debug/roxy-loader.efi";
 const BOOTLOADER_IMAGE_PATH: &str = "target/image.img";
 
@@ -39,7 +39,7 @@ fn run() -> Result<ExitStatus> {
     let bootloader_efi_file = get_workspace_root().join(BOOTLOADER_EFI_FILE_PATH);
     let bootloader_image_path = get_workspace_root().join(BOOTLOADER_IMAGE_PATH);
 
-    build_bootloader_image(bootloader_efi_file, bootloader_image_path.clone()).unwrap();
+    build_bootloader_image(bootloader_efi_file, bootloader_image_path.clone())?;
 
     println!("Downloading ovmf, this might take a long time.");
     let (ovmf_code, ovmf_vars) = fetch_ovmf()?;
@@ -75,7 +75,9 @@ fn run() -> Result<ExitStatus> {
 }
 
 fn fetch_ovmf() -> Result<(PathBuf, PathBuf)> {
-    let ovmf = ovmf_prebuilt::Prebuilt::fetch(ovmf_prebuilt::Source::LATEST, OVMF_DIR)?;
+    let ovmf_dir = get_workspace_root().join(OVMF_DIR);
+
+    let ovmf = ovmf_prebuilt::Prebuilt::fetch(ovmf_prebuilt::Source::LATEST, ovmf_dir)?;
 
     let ovmf_code = ovmf.get_file(Arch::X64, FileType::Code);
     let ovmf_vars = ovmf.get_file(Arch::X64, FileType::Vars);

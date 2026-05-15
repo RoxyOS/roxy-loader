@@ -9,6 +9,9 @@ pub enum Error {
     #[error("Qemu is not installed")]
     NoQemu,
 
+    #[error("Failed to build bootloader image {0}")]
+    BootloaderImage(#[from] anyhow::Error),
+
     #[error("Error when fetching ovmf: {0}")]
     OvmfFetchError(#[from] ovmf_prebuilt::Error),
 
