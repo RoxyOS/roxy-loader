@@ -10,7 +10,7 @@ pub fn build() -> Result<()> {
     Ok(())
 }
 
-pub fn bootloader_efi_path() -> Result<PathBuf> {
+pub fn bootloader_efi_file() -> Result<PathBuf> {
     Ok(cargo_target_dir()?
         .join("x86_64-unknown-uefi")
         .join("debug")
