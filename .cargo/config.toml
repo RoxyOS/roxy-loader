@@ -2,7 +2,9 @@
 xbuild = "run -p xtask build"
 xbuild-image = "run -p xtask build-image"
 xrun-basic-kernel = "run -p xtask run-basic-kernel"
+xbuild-basic-kernel = "run -p xtask build-basic-kernel"
 
 xb = "run -p xtask build"
 img = "run -p xtask build-image"
 rb = "run -p xtask run-basic-kernel"
+bb = "run -p xtask build-basic-kernel"

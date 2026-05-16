@@ -1,11 +1,13 @@
 use anyhow::Result;
 
 use crate::{
+    build_basic_kernel::build_basic_kernel,
     build_image::{bootloader_image, build_image},
     run_vm::{VMResult, run_vm},
 };
 
 pub fn run_basic_kernel() -> Result<()> {
+    build_basic_kernel()?;
     build_image()?;
     let result = run_vm(bootloader_image()?);
     display_vm_result(result);

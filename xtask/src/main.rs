@@ -5,12 +5,14 @@ use xshell::Shell;
 
 use crate::{
     build::build,
+    build_basic_kernel::build_basic_kernel,
     build_image::build_image,
     command::{Args, Command},
     run_basic_kernel::run_basic_kernel,
 };
 
 pub mod build;
+pub mod build_basic_kernel;
 pub mod build_image;
 pub mod command;
 pub mod run_basic_kernel;
@@ -30,6 +32,7 @@ fn main() -> Result<()> {
         Command::RunBasicKernel => run_basic_kernel()?,
         Command::Build => build()?,
         Command::BuildImage => build_image()?,
+        Command::BuildBasicKernel => build_basic_kernel()?,
     }
 
     Ok(())

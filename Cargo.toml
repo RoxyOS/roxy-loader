@@ -1,5 +1,5 @@
 [workspace]
-members = ["image-builder", "xtask"]
+members = ["basic-kernel","image-builder", "xtask"]
 
 [package]
 name = "roxy-loader"
