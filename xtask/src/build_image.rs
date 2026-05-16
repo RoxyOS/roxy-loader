@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use anyhow::{Ok, Result};
-use image_builder::build_bootloader_image;
+use roxy_loader_utils::bootloader_image::build_bootloader_image;
 use workspace_root::get_workspace_root;
 
 use crate::{
