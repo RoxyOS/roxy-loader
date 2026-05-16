@@ -8,7 +8,7 @@ edition = "2024"
 
 [dependencies]
 elfloader = "0.16.0"
-uefi = { version = "0.37.0", features = ["panic_handler"] }
+uefi = { version = "0.37.0", features = ["alloc", "global_allocator", "panic_handler"] }
 
 [workspace.dependencies]
 image-builder.path = "./image-builder"
