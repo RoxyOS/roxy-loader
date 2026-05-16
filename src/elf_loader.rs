@@ -11,7 +11,7 @@ impl ElfLoader for RoxyElfLoader {
         load_headers: elfloader::LoadableHeaders,
     ) -> Result<(), elfloader::ElfLoaderErr> {
         for header in load_headers {
-            let addr = header.physical_addr();
+            let addr = header.virtual_addr();
             let size = header.mem_size();
             let pages = size.div_ceil(4096) as usize;
 
