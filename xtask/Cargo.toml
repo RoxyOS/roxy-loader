@@ -12,3 +12,4 @@ xshell = "0.2.7"
 image-builder.workspace = true
 qemu-command-builder = "11.0.0-1"
 ovmf-prebuilt = "0.2.8"
+fatfs = "0.3.6"

@@ -8,7 +8,6 @@ use crate::{
 
 pub fn run_basic_kernel() -> Result<()> {
     build_basic_kernel()?;
-    build_image()?;
     let result = run_vm(bootloader_image()?);
     display_vm_result(result);
     Ok(())

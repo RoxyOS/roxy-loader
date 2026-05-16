@@ -1731,6 +1731,7 @@ dependencies = [
  "anyhow",
  "cargo_metadata",
  "clap",
+ "fatfs",
  "image-builder",
  "ovmf-prebuilt",
  "qemu-command-builder",
