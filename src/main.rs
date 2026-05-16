@@ -6,7 +6,7 @@ extern crate alloc;
 use core::{mem::transmute, ptr::copy_nonoverlapping, time::Duration};
 
 use alloc::ffi::c_str;
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail};
 use core::result::Result::Ok;
 use elfloader::{ElfBinary, ElfLoader, ElfLoaderErr};
 use uefi::{
@@ -38,6 +38,10 @@ fn run() -> Result<()> {
     let kernel_elf = ElfBinary::new(&kernel_file)
         .ok()
         .context("Failed to parse kernel elf")?;
+
+    if kernel_elf.is_pie() {
+        bail!("PIE kernels are not supported.");
+    }
 
     kernel_elf
         .load(&mut RoxyElfLoader)
