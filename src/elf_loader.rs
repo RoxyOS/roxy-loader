@@ -1,7 +1,10 @@
 use core::ptr::copy_nonoverlapping;
 
 use elfloader::{ElfLoader, ElfLoaderErr};
-use uefi::boot::{AllocateType, MemoryType, allocate_pages};
+use uefi::{
+    boot::{AllocateType, MemoryType, allocate_pages},
+    println,
+};
 
 pub struct RoxyElfLoader;
 
@@ -16,7 +19,7 @@ impl ElfLoader for RoxyElfLoader {
             let pages = size.div_ceil(4096) as usize;
 
             allocate_pages(AllocateType::Address(addr), MemoryType::LOADER_DATA, pages)
-                .map_err(|_| ElfLoaderErr::OutOfMemory)?;
+                .expect("Failed to allocate page for kernel elf");
         }
 
         Ok(())
