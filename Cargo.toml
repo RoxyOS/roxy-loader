@@ -7,6 +7,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+anyhow = { version = "1.0.102", default-features = false }
 elfloader = "0.16.0"
 uefi = { version = "0.37.0", features = ["alloc", "global_allocator", "panic_handler"] }
 
