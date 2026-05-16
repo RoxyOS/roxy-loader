@@ -11,14 +11,14 @@ const BOOTLOADER_IMAGE_SIZE: u64 = 64 * 1024 * 1024;
 
 pub fn build_bootloader_image(
     bootloader_efi_file: PathBuf,
-    bootloader_image_path: PathBuf,
+    output_image_path: PathBuf,
 ) -> Result<()> {
     let mut bootloader_image = File::options()
         .read(true)
         .write(true)
         .create(true)
         .truncate(true)
-        .open(bootloader_image_path)?;
+        .open(output_image_path)?;
 
     bootloader_image.set_len(BOOTLOADER_IMAGE_SIZE)?;
 
