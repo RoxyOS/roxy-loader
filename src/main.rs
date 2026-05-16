@@ -34,7 +34,7 @@ fn main() -> Status {
 }
 
 fn run() -> Result<()> {
-    let kernel_file = read_file(cstr16!("/kernel")).context("Failed to read kernel file")?;
+    let kernel_file = read_file(cstr16!("\\KERNEL")).context("Failed to read kernel file")?;
     let kernel_elf = ElfBinary::new(&kernel_file)
         .ok()
         .context("Failed to parse kernel elf")?;
