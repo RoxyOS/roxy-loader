@@ -46,7 +46,7 @@ fn run() -> Result<()> {
     unsafe {
         exit_boot_services(None);
 
-        let kernel_entry: extern "C" fn() = transmute(kernel_elf.entry_point());
+        let kernel_entry: extern "sysv64" fn() = transmute(kernel_elf.entry_point());
 
         kernel_entry();
     }

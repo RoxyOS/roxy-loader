@@ -4,7 +4,7 @@
 use core::{arch::asm, panic::PanicInfo};
 
 #[unsafe(no_mangle)]
-extern "C" fn _start() {
+extern "sysv64" fn _start() {
     loop {}
 }
 
