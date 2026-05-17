@@ -1,5 +1,5 @@
 [workspace]
-members = ["basic-kernel", "utils", "xtask"]
+members = ["api","basic-kernel", "utils", "xtask"]
 
 [package]
 name = "roxy-loader"
@@ -13,3 +13,4 @@ uefi = { version = "0.37.0", features = ["alloc", "global_allocator", "panic_han
 
 [workspace.dependencies]
 roxy-loader-utils.path = "./utils"
+roxy-loader-api.path = "./api"
