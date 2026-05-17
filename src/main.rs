@@ -43,9 +43,9 @@ fn run() -> Result<()> {
     let bootinfo = Box::leak(Box::new(new_bootinfo()?));
 
     unsafe {
-        exit_boot_services(None);
-
         let kernel_entry = load_kernel()?;
+
+        exit_boot_services(None);
 
         kernel_entry(&*bootinfo);
     }
