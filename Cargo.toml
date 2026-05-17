@@ -10,6 +10,7 @@ edition = "2024"
 anyhow = { version = "1.0.102", default-features = false }
 elfloader = "0.16.0"
 uefi = { version = "0.37.0", features = ["alloc", "global_allocator", "panic_handler"] }
+roxy-loader-api.workspace = true
 
 [workspace.dependencies]
 roxy-loader-utils.path = "./utils"

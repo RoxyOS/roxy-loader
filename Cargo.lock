@@ -102,6 +102,9 @@ checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
 [[package]]
 name = "basic-kernel"
 version = "0.1.0"
+dependencies = [
+ "roxy-loader-api",
+]
 
 [[package]]
 name = "bit-set"
@@ -950,6 +953,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "elfloader",
+ "roxy-loader-api",
  "uefi",
 ]
 

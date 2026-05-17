@@ -5,10 +5,11 @@ extern crate alloc;
 
 use core::{mem::transmute, ptr::copy_nonoverlapping, time::Duration};
 
-use alloc::ffi::c_str;
+use alloc::{boxed::Box, ffi::c_str};
 use anyhow::{Context, Result, bail};
 use core::result::Result::Ok;
 use elfloader::{ElfBinary, ElfLoader, ElfLoaderErr};
+use roxy_loader_api::BootInfo;
 use uefi::{
     Status,
     boot::{self, AllocateType, MemoryType, allocate_pages, exit_boot_services},
@@ -16,10 +17,12 @@ use uefi::{
     proto::media::fs,
 };
 
-use crate::{elf_loader::RoxyElfLoader, utils::read_file};
+use crate::{bootinfo::new_bootinfo, elf_loader::RoxyElfLoader, utils::read_file};
 use uefi::cstr16;
 
+mod bootinfo;
 mod elf_loader;
+mod framebuffer;
 mod utils;
 
 #[entry]
@@ -33,7 +36,11 @@ fn main() -> Status {
     }
 }
 
+type KernelEntry = extern "sysv64" fn(*const BootInfo);
+
 fn run() -> Result<()> {
+    let bootinfo = Box::leak(Box::new(new_bootinfo()?));
+
     let kernel_file = read_file(cstr16!("\\KERNEL")).context("Failed to read kernel file")?;
     let kernel_elf = ElfBinary::new(&kernel_file)
         .ok()
@@ -50,9 +57,9 @@ fn run() -> Result<()> {
     unsafe {
         exit_boot_services(None);
 
-        let kernel_entry: extern "sysv64" fn() = transmute(kernel_elf.entry_point());
+        let kernel_entry: KernelEntry = transmute(kernel_elf.entry_point());
 
-        kernel_entry();
+        kernel_entry(&*bootinfo);
     }
 
     Ok(())
