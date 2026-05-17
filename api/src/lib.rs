@@ -1,6 +1,13 @@
 #![no_std]
 
-extern crate alloc;
+#[repr(C)]
+pub struct Framebuffer {
+    pub ptr: *mut u8,
+    pub size: usize,
+    pub stride: usize,
+}
 
 #[repr(C)]
-pub struct FramebufferInfo {}
+pub struct BootInfo {
+    pub framebuffer: Framebuffer,
+}
