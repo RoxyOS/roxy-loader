@@ -17,12 +17,15 @@ use uefi::{
     proto::media::fs,
 };
 
-use crate::{bootinfo::new_bootinfo, elf_loader::RoxyElfLoader, utils::read_file};
+use crate::{
+    bootinfo::new_bootinfo, elf_loader::RoxyElfLoader, load_kernel::load_kernel, utils::read_file,
+};
 use uefi::cstr16;
 
 mod bootinfo;
 mod elf_loader;
 mod framebuffer;
+mod load_kernel;
 mod utils;
 
 #[entry]
@@ -36,28 +39,13 @@ fn main() -> Status {
     }
 }
 
-type KernelEntry = extern "sysv64" fn(*const BootInfo);
-
 fn run() -> Result<()> {
     let bootinfo = Box::leak(Box::new(new_bootinfo()?));
-
-    let kernel_file = read_file(cstr16!("\\KERNEL")).context("Failed to read kernel file")?;
-    let kernel_elf = ElfBinary::new(&kernel_file)
-        .ok()
-        .context("Failed to parse kernel elf")?;
-
-    if kernel_elf.is_pie() {
-        bail!("PIE kernels are not supported.");
-    }
-
-    kernel_elf
-        .load(&mut RoxyElfLoader)
-        .expect("Failed to load kernel elf");
 
     unsafe {
         exit_boot_services(None);
 
-        let kernel_entry: KernelEntry = transmute(kernel_elf.entry_point());
+        let kernel_entry = load_kernel()?;
 
         kernel_entry(&*bootinfo);
     }
