@@ -40,11 +40,14 @@ pub fn run_vm(image: PathBuf) -> VMResult {
 
     let drives = vec![code_drive, vars_drive, image_drive];
 
-    let qemu_command = QemuInstanceForX86_64::builder()
+    let mut qemu_command = QemuInstanceForX86_64::builder()
         .qemu_binary(QEMU_BINARY_NAME.into())
-        .enable_kvm(true)
         .drive(drives)
         .build();
+
+    if std::fs::metadata("/dev/kvm").is_ok() {
+        qemu_command.enable_kvm = Some(true);
+    }
 
     run_qemu(qemu_command)
 }
