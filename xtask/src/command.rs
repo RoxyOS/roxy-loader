@@ -12,8 +12,4 @@ pub enum Command {
     RunBasicKernel,
     #[command(about = "Build the basic kernel")]
     BuildBasicKernel,
-    #[command(about = "Build the bootloader EFI binary")]
-    Build,
-    #[command(about = "Build the bootloader disk image")]
-    BuildImage,
 }

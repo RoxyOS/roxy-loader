@@ -198,6 +198,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "cargo-bin-file"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "66e59c06892e93542ca121a84578fdfe8a9e49ff32609917ad333050c8ca372b"
+
+[[package]]
+name = "cargo-emit"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1582e1c9e755dd6ad6b224dcffb135d199399a4568d454bd89fe515ca8425695"
+
+[[package]]
 name = "cargo-platform"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -946,7 +958,11 @@ name = "roxy-loader-utils"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "cargo-bin-file",
+ "cargo-emit",
+ "cargo_metadata",
  "fatfs",
+ "roxy-loader",
  "tap",
 ]
 
