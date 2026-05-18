@@ -1,4 +1,4 @@
-use std::{path::PathBuf, process::ExitStatus};
+use std::{fs::metadata, path::PathBuf, process::ExitStatus};
 
 use anyhow::Result;
 use ovmf_prebuilt::{Arch, FileType};
@@ -62,7 +62,7 @@ fn build_qemu_command(
 }
 
 fn kvm_available() -> bool {
-    std::fs::metadata("/dev/kvm").is_ok()
+    metadata("/dev/kvm").is_ok()
 }
 
 const OVMF_DIR: &str = "ovmf";
