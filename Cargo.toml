@@ -21,7 +21,7 @@ clap = { version = "4", features = ["derive"] }
 elfloader = "0.16"
 fatfs = "0.3"
 ovmf-prebuilt = "0.2"
-qemu-command-builder = "11"
+qemu-command-builder = "11.0.0-1"
 roxy-loader-utils.path = "./utils"
 roxy-loader-api.path = "./api"
 tap = "1"
