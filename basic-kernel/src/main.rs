@@ -11,7 +11,7 @@ fn kernel_main(bootinfo: &BootInfo) -> ! {
     unsafe {
         let ptr = bootinfo.framebuffer.ptr;
 
-        for i in 0..1000000 {
+        for i in 0..bootinfo.framebuffer.size {
             ptr.add(i).write_volatile(69);
         }
 
