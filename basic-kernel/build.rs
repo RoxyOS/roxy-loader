@@ -1,3 +1,5 @@
+use cargo_emit::rustc_link_arg;
+
 fn main() {
-    println!("cargo:rustc-link-arg=-no-pie");
+    rustc_link_arg!("-no-pie");
 }
