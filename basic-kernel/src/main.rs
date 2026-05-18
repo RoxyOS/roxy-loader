@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 
-use core::{arch::asm, panic::PanicInfo};
+use core::panic::PanicInfo;
 
 use roxy_loader_api::{bootinfo::BootInfo, kernel_entry};
 
@@ -20,6 +20,6 @@ fn kernel_main(bootinfo: &BootInfo) -> ! {
 }
 
 #[panic_handler]
-fn panic(panic_info: &PanicInfo) -> ! {
+fn panic(_panic_info: &PanicInfo) -> ! {
     loop {}
 }
