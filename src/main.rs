@@ -9,7 +9,7 @@ use alloc::{boxed::Box, ffi::c_str};
 use anyhow::{Context, Result, bail};
 use core::result::Result::Ok;
 use elfloader::{ElfBinary, ElfLoader, ElfLoaderErr};
-use roxy_loader_api::BootInfo;
+use roxy_loader_api::bootinfo::BootInfo;
 use uefi::{
     Status,
     boot::{self, AllocateType, MemoryType, allocate_pages, exit_boot_services},

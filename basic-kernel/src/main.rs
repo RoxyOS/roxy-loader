@@ -3,7 +3,7 @@
 
 use core::{arch::asm, panic::PanicInfo};
 
-use roxy_loader_api::{BootInfo, kernel_entry};
+use roxy_loader_api::{bootinfo::BootInfo, kernel_entry};
 
 kernel_entry!(kernel_main);
 

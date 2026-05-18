@@ -1,5 +1,5 @@
 use anyhow::Result;
-use roxy_loader_api::BootInfo;
+use roxy_loader_api::bootinfo::BootInfo;
 
 use crate::framebuffer::new_framebuffer;
 
