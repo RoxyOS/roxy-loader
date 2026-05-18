@@ -3,7 +3,7 @@ use core::mem::transmute;
 use anyhow::{Context, Result, bail};
 use elfloader::ElfBinary;
 use roxy_loader_api::bootinfo::BootInfo;
-use uefi::{boot::exit_boot_services, cstr16};
+use uefi::cstr16;
 
 use crate::{elf_loader::RoxyElfLoader, utils::read_file};
 

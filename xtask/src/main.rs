@@ -1,7 +1,5 @@
-use anyhow::{Ok, Result};
+use anyhow::Result;
 use clap::Parser;
-use workspace_root::get_workspace_root;
-use xshell::Shell;
 
 use crate::{
     build_basic_kernel::build_basic_kernel,

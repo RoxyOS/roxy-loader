@@ -5,8 +5,7 @@ use uefi::{
         ScopedProtocol, get_handle_for_protocol, get_image_file_system, image_handle,
         open_protocol_exclusive,
     },
-    cstr16,
-    fs::{self, FileSystem, Path},
+    fs::{FileSystem, Path},
     proto::Protocol,
 };
 

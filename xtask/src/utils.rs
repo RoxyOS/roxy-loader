@@ -5,7 +5,6 @@ use std::{
 };
 
 use anyhow::Result;
-use cargo_metadata::MetadataCommand;
 use qemu_command_builder::{QemuInstanceForX86_64, to_command::ToCommand};
 use workspace_root::get_workspace_root;
 use xshell::Shell;

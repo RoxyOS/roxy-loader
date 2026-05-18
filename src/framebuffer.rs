@@ -1,6 +1,6 @@
 use anyhow::Result;
 use roxy_loader_api::framebuffer::Framebuffer;
-use uefi::{boot::get_handle_for_protocol, proto::console::gop::GraphicsOutput};
+use uefi::proto::console::gop::GraphicsOutput;
 
 use crate::utils::get_and_open_protocol;
 

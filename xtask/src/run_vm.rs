@@ -7,7 +7,6 @@ use qemu_command_builder::{
     args::drive::{Drive, DriveInterface},
     common::OnOff,
 };
-use workspace_root::get_workspace_root;
 
 use crate::utils::{cargo_target_dir, run_qemu};
 

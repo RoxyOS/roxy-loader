@@ -3,24 +3,11 @@
 
 extern crate alloc;
 
-use core::{mem::transmute, ptr::copy_nonoverlapping, time::Duration};
+use alloc::boxed::Box;
+use anyhow::Result;
+use uefi::{Status, boot::exit_boot_services, entry, println};
 
-use alloc::{boxed::Box, ffi::c_str};
-use anyhow::{Context, Result, bail};
-use core::result::Result::Ok;
-use elfloader::{ElfBinary, ElfLoader, ElfLoaderErr};
-use roxy_loader_api::bootinfo::BootInfo;
-use uefi::{
-    Status,
-    boot::{self, AllocateType, MemoryType, allocate_pages, exit_boot_services},
-    entry, println,
-    proto::media::fs,
-};
-
-use crate::{
-    bootinfo::new_bootinfo, elf_loader::RoxyElfLoader, load_kernel::load_kernel, utils::read_file,
-};
-use uefi::cstr16;
+use crate::{bootinfo::new_bootinfo, load_kernel::load_kernel};
 
 mod allocation_info;
 mod bootinfo;
@@ -46,7 +33,7 @@ fn run() -> Result<()> {
     unsafe {
         let kernel_entry = load_kernel()?;
 
-        exit_boot_services(None);
+        let _ = exit_boot_services(None);
 
         kernel_entry(&*bootinfo);
     }
