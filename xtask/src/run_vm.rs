@@ -17,7 +17,16 @@ pub type VMResult = Result<ExitStatus>;
 
 pub fn run_vm(image: PathBuf) -> VMResult {
     let (ovmf_code, ovmf_vars) = fetch_ovmf()?;
+    let qemu_command = build_qemu_command(image, ovmf_code, ovmf_vars, kvm_available());
+    run_qemu(qemu_command)
+}
 
+fn build_qemu_command(
+    image: PathBuf,
+    ovmf_code: PathBuf,
+    ovmf_vars: PathBuf,
+    enable_kvm: bool,
+) -> QemuInstanceForX86_64 {
     let code_drive = Drive::builder()
         .interface(DriveInterface::Pflash)
         .format("raw".into())
@@ -45,11 +54,15 @@ pub fn run_vm(image: PathBuf) -> VMResult {
         .drive(drives)
         .build();
 
-    if std::fs::metadata("/dev/kvm").is_ok() {
+    if enable_kvm {
         qemu_command.enable_kvm = Some(true);
     }
 
-    run_qemu(qemu_command)
+    qemu_command
+}
+
+fn kvm_available() -> bool {
+    std::fs::metadata("/dev/kvm").is_ok()
 }
 
 const OVMF_DIR: &str = "ovmf";
@@ -65,4 +78,43 @@ fn fetch_ovmf() -> Result<(PathBuf, PathBuf)> {
     let ovmf_vars = ovmf.get_file(Arch::X64, FileType::Vars);
 
     Ok((ovmf_code, ovmf_vars))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use qemu_command_builder::to_command::ToCommand;
+
+    #[test]
+    fn build_qemu_command_includes_expected_drives() {
+        let command = build_qemu_command(
+            PathBuf::from("/tmp/image.img"),
+            PathBuf::from("/tmp/OVMF_CODE.fd"),
+            PathBuf::from("/tmp/OVMF_VARS.fd"),
+            false,
+        );
+
+        let argv = command.to_command();
+        let joined = argv.join(" ");
+
+        assert_eq!(argv.first().map(String::as_str), Some(QEMU_BINARY_NAME));
+        assert!(joined.contains("/tmp/OVMF_CODE.fd"));
+        assert!(joined.contains("/tmp/OVMF_VARS.fd"));
+        assert!(joined.contains("/tmp/image.img"));
+        assert!(joined.contains("if=pflash"));
+        assert!(!joined.contains("-enable-kvm"));
+    }
+
+    #[test]
+    fn build_qemu_command_enables_kvm_when_requested() {
+        let command = build_qemu_command(
+            PathBuf::from("/tmp/image.img"),
+            PathBuf::from("/tmp/OVMF_CODE.fd"),
+            PathBuf::from("/tmp/OVMF_VARS.fd"),
+            true,
+        );
+
+        let argv = command.to_command();
+        assert!(argv.iter().any(|arg| arg == "-enable-kvm"));
+    }
 }

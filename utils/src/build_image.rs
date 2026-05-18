@@ -2,7 +2,7 @@ use std::{
     env,
     fs::File,
     io::{self, Seek, SeekFrom},
-    path::PathBuf,
+    path::{Path, PathBuf},
 };
 
 use anyhow::Result;
@@ -11,9 +11,19 @@ use fatfs::{FileSystem, FormatVolumeOptions, FsOptions};
 use crate::utils::cargo_target_dir;
 
 pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
+    let image_path = default_image_path()?;
+    build_image_from_paths(&image_path, &roxyloader_artifact(), &kernel_binary)?;
+    Ok(image_path)
+}
+
+pub fn build_image_from_paths(
+    image_path: &Path,
+    roxyloader_artifact: &Path,
+    kernel_binary: &Path,
+) -> Result<()> {
     const IMAGE_SIZE: u64 = 64 * 1024 * 1024;
 
-    let mut image = open_image()?;
+    let mut image = open_image(image_path)?;
 
     // truncate
     image.set_len(IMAGE_SIZE)?;
@@ -31,7 +41,7 @@ pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
     let boot_dir = efi_dir.open_dir("BOOT")?;
 
     // Copies roxyloader artifact
-    let mut src = File::open(roxyloader_artifact())?;
+    let mut src = File::open(roxyloader_artifact)?;
     let mut dst = boot_dir.create_file("BOOTX64.EFI")?;
     io::copy(&mut src, &mut dst)?;
 
@@ -40,7 +50,7 @@ pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
     let mut src = File::open(kernel_binary)?;
     io::copy(&mut src, &mut dst)?;
 
-    default_image_path()
+    Ok(())
 }
 
 pub fn default_image_path() -> Result<PathBuf> {
@@ -48,15 +58,92 @@ pub fn default_image_path() -> Result<PathBuf> {
     Ok(cargo_target_dir()?.join(IMAGE_NAME))
 }
 
-fn open_image() -> Result<File> {
+fn open_image(path: &Path) -> Result<File> {
     Ok(File::options()
         .read(true)
         .write(true)
         .create(true)
         .truncate(true)
-        .open(default_image_path()?)?)
+        .open(path)?)
 }
 
 fn roxyloader_artifact() -> PathBuf {
     env!("ROXYLOADER_ARTIFACT").into()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::{
+        io::Read,
+        sync::atomic::{AtomicU64, Ordering},
+        time::{SystemTime, UNIX_EPOCH},
+    };
+
+    fn test_temp_dir() -> Result<std::path::PathBuf> {
+        static COUNTER: AtomicU64 = AtomicU64::new(0);
+
+        let unique = COUNTER.fetch_add(1, Ordering::Relaxed);
+        let dir = std::env::temp_dir().join(format!(
+            "roxy-loader-test-{}-{}",
+            std::process::id(),
+            SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos() + unique as u128
+        ));
+
+        std::fs::create_dir_all(&dir)?;
+        Ok(dir)
+    }
+
+    #[test]
+    fn build_image_contains_loader_and_kernel_payloads() -> Result<()> {
+        let dir = test_temp_dir()?;
+        let image_path = dir.join("image.img");
+        let loader_path = dir.join("loader.efi");
+        let kernel_path = dir.join("kernel.bin");
+
+        std::fs::write(&loader_path, b"loader-bytes")?;
+        std::fs::write(&kernel_path, b"kernel-bytes")?;
+
+        build_image_from_paths(&image_path, &loader_path, &kernel_path)?;
+
+        let image = File::options().read(true).write(true).open(&image_path)?;
+        let fs = FileSystem::new(image, FsOptions::new())?;
+
+        let root = fs.root_dir();
+        let efi_dir = root.open_dir("EFI")?;
+        let boot_dir = efi_dir.open_dir("BOOT")?;
+
+        let mut loader_file = boot_dir.open_file("BOOTX64.EFI")?;
+        let mut loader_bytes = Vec::new();
+        loader_file.read_to_end(&mut loader_bytes)?;
+        assert_eq!(loader_bytes, b"loader-bytes");
+
+        let mut kernel_file = root.open_file("KERNEL")?;
+        let mut kernel_bytes = Vec::new();
+        kernel_file.read_to_end(&mut kernel_bytes)?;
+        assert_eq!(kernel_bytes, b"kernel-bytes");
+
+        std::fs::remove_dir_all(&dir)?;
+        Ok(())
+    }
+
+    #[test]
+    fn build_image_truncates_existing_image_contents() -> Result<()> {
+        let dir = test_temp_dir()?;
+        let image_path = dir.join("image.img");
+        let loader_path = dir.join("loader.efi");
+        let kernel_path = dir.join("kernel.bin");
+
+        std::fs::write(&loader_path, b"a")?;
+        std::fs::write(&kernel_path, b"b")?;
+        std::fs::write(&image_path, b"stale-bytes")?;
+
+        build_image_from_paths(&image_path, &loader_path, &kernel_path)?;
+
+        let metadata = std::fs::metadata(&image_path)?;
+        assert_eq!(metadata.len(), 64 * 1024 * 1024);
+
+        std::fs::remove_dir_all(&dir)?;
+        Ok(())
+    }
 }
