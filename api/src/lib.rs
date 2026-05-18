@@ -1,5 +1,7 @@
 #![no_std]
 
+pub mod kernel_entry;
+
 #[repr(C)]
 pub struct Framebuffer {
     pub ptr: *mut u8,

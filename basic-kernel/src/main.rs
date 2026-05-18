@@ -3,20 +3,20 @@
 
 use core::{arch::asm, panic::PanicInfo};
 
-use roxy_loader_api::BootInfo;
+use roxy_loader_api::{BootInfo, kernel_entry};
 
-#[unsafe(no_mangle)]
-extern "sysv64" fn _start(bootinfo: *const BootInfo) {
+kernel_entry!(kernel_main);
+
+fn kernel_main(bootinfo: &BootInfo) -> ! {
     unsafe {
-        let bootinfo = &*bootinfo;
-
         let ptr = bootinfo.framebuffer.ptr;
 
         for i in 0..1000000 {
             ptr.add(i).write_volatile(69);
         }
+
+        loop {}
     }
-    loop {}
 }
 
 #[panic_handler]
