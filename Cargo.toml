@@ -25,6 +25,6 @@ qemu-command-builder = "11.0.0-1"
 roxy-loader-utils.path = "./utils"
 roxy-loader-api.path = "./api"
 tap = "1"
-uefi = { version = "0.37", features = ["alloc", "global_allocator", "panic_handler"] }
+uefi = { version = "0.37", features = ["alloc"] }
 workspace_root = "0.2"
 xshell = "0.2"

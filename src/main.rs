@@ -3,22 +3,18 @@
 
 extern crate alloc;
 
-use alloc::boxed::Box;
-use anyhow::Result;
+use core::panic::PanicInfo;
+use uefi::allocator::Allocator;
 use uefi::{Status, boot::exit_boot_services, entry, println};
 
-use crate::{bootinfo::new_bootinfo, load_kernel::load_kernel};
+use roxy_loader::{bootinfo::new_bootinfo, load_kernel::load_kernel};
 
-mod allocation_info;
-mod bootinfo;
-mod elf_loader;
-mod framebuffer;
-mod load_kernel;
-mod utils;
+#[global_allocator]
+static GLOBAL_ALLOCATOR: Allocator = Allocator;
 
 #[entry]
 fn main() -> Status {
-    match run() {
+    match run_main() {
         Ok(()) => Status::SUCCESS,
         Err(error) => {
             println!("{error}");
@@ -27,8 +23,13 @@ fn main() -> Status {
     }
 }
 
-fn run() -> Result<()> {
-    let bootinfo = Box::leak(Box::new(new_bootinfo()?));
+#[panic_handler]
+fn panic(_panic_info: &PanicInfo) -> ! {
+    loop {}
+}
+
+fn run_main() -> anyhow::Result<()> {
+    let bootinfo = alloc::boxed::Box::leak(alloc::boxed::Box::new(new_bootinfo()?));
 
     unsafe {
         let kernel_entry = load_kernel()?;
