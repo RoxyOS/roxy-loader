@@ -7,11 +7,24 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-anyhow = { version = "1.0.102", default-features = false }
-elfloader = "0.16.0"
-uefi = { version = "0.37.0", features = ["alloc", "global_allocator", "panic_handler"] }
+anyhow.workspace = true
+elfloader.workspace = true
+uefi.workspace = true
 roxy-loader-api.workspace = true
 
 [workspace.dependencies]
+anyhow = { version = "1.0.102", default-features = false }
+cargo-bin-file = "0.1.0"
+cargo-emit = "0.2.1"
+cargo_metadata = "0.23.1"
+clap = { version = "4.6.1", features = ["derive"] }
+elfloader = "0.16.0"
+fatfs = "0.3.6"
+ovmf-prebuilt = "0.2.8"
+qemu-command-builder = "11.0.0-1"
 roxy-loader-utils.path = "./utils"
 roxy-loader-api.path = "./api"
+tap = "1.0.1"
+uefi = { version = "0.37.0", features = ["alloc", "global_allocator", "panic_handler"] }
+workspace_root = "0.2.0"
+xshell = "0.2.7"

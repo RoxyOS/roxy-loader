@@ -4,13 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-anyhow = "1.0.102"
-cargo_metadata = "0.23.1"
-fatfs = "0.3.6"
-tap = "1.0.1"
+anyhow.workspace = true
+cargo_metadata.workspace = true
+fatfs.workspace = true
+tap.workspace = true
 
 [build-dependencies]
-cargo-emit = "0.2.1"
+cargo-emit.workspace = true
 roxy-loader = { path = "..", artifact = "bin", target = "x86_64-unknown-uefi" }
-cargo-bin-file = "0.1.0"
-
+cargo-bin-file.workspace = true

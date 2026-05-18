@@ -7,4 +7,4 @@ edition = "2024"
 roxy-loader-api.workspace = true
 
 [build-dependencies]
-cargo-emit = "0.2.1"
+cargo-emit.workspace = true

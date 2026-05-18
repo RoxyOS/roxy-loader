@@ -4,12 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-anyhow = "1.0.102"
-cargo_metadata = "0.23.1"
-clap = { version = "4.6.1", features = ["derive"] }
-workspace_root = "0.2.0"
-xshell = "0.2.7"
+anyhow.workspace = true
+cargo_metadata.workspace = true
+clap.workspace = true
+workspace_root.workspace = true
+xshell.workspace = true
 roxy-loader-utils.workspace = true
-qemu-command-builder = "11.0.0-1"
-ovmf-prebuilt = "0.2.8"
-fatfs = "0.3.6"
+qemu-command-builder.workspace = true
+ovmf-prebuilt.workspace = true
+fatfs.workspace = true
