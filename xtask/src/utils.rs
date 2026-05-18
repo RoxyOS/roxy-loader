@@ -7,6 +7,8 @@ use std::{
 use anyhow::Result;
 use cargo_metadata::MetadataCommand;
 use qemu_command_builder::{QemuInstanceForX86_64, to_command::ToCommand};
+use workspace_root::get_workspace_root;
+use xshell::Shell;
 
 #[macro_export]
 macro_rules! run_command {
@@ -35,4 +37,10 @@ pub fn run_qemu(qemu_command: QemuInstanceForX86_64) -> Result<ExitStatus> {
         .stdout(io::stdout())
         .spawn()?
         .wait()?)
+}
+
+pub fn chdir_to_workspace_root() -> Result<()> {
+    let workspace_root = get_workspace_root();
+    Shell::new()?.change_dir(workspace_root);
+    Ok(())
 }
