@@ -22,6 +22,7 @@ use crate::{
 };
 use uefi::cstr16;
 
+mod allocation_info;
 mod bootinfo;
 mod elf_loader;
 mod framebuffer;
