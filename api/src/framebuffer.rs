@@ -7,6 +7,14 @@ pub struct Framebuffer {
 }
 
 impl Framebuffer {
+    pub fn new(ptr: *mut u8, size: usize, stride: usize) -> Self {
+        Self {
+            ptr: ptr as usize,
+            size,
+            stride,
+        }
+    }
+
     pub fn ptr(&self) -> *mut u8 {
         self.ptr as *mut u8
     }

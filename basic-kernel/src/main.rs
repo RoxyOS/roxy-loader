@@ -9,7 +9,7 @@ kernel_entry!(kernel_main);
 
 fn kernel_main(bootinfo: &BootInfo) -> ! {
     unsafe {
-        let ptr = bootinfo.framebuffer.ptr;
+        let ptr = bootinfo.framebuffer.ptr();
 
         for i in 0..bootinfo.framebuffer.size {
             ptr.add(i).write_volatile(69);

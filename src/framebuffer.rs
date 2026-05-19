@@ -10,9 +10,5 @@ pub fn new_framebuffer() -> Result<Framebuffer> {
     let mode = gop.current_mode_info();
     let mut fb = gop.frame_buffer();
 
-    Ok(Framebuffer {
-        ptr: fb.as_mut_ptr(),
-        size: fb.size(),
-        stride: mode.stride(),
-    })
+    Ok(Framebuffer::new(fb.as_mut_ptr(), fb.size(), mode.stride()))
 }
