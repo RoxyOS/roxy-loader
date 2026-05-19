@@ -3,11 +3,10 @@ use crate::{
     run_vm::{VMResult, run_vm},
 };
 use anyhow::Result;
-use roxy_loader_utils::build_image::default_image_path;
 
 pub fn run_basic_kernel() -> Result<()> {
     build_basic_kernel()?;
-    let result = run_vm(default_image_path()?);
+    let result = run_vm();
     display_vm_result(result);
     Ok(())
 }

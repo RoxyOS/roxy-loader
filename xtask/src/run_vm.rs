@@ -8,6 +8,7 @@ use qemu_command_builder::{
     args::{device::Device, display::QemuDisplay, serial::SpecialDevice},
     common::OnOff,
 };
+use roxy_loader_utils::build_image::default_image_path;
 
 use crate::utils::{cargo_target_dir, run_qemu};
 
@@ -19,13 +20,15 @@ pub const TEST_FAILURE_EXIT_STATUS: i32 = 35;
 
 pub type VMResult = Result<ExitStatus>;
 
-pub fn run_vm(image: PathBuf) -> VMResult {
+pub fn run_vm() -> VMResult {
+    let image = default_image_path()?;
     let (ovmf_code, ovmf_vars) = fetch_ovmf()?;
     let qemu_command = build_qemu_command(image, ovmf_code, ovmf_vars, kvm_available(), false);
     run_qemu(qemu_command)
 }
 
-pub fn run_test_vm(image: PathBuf) -> VMResult {
+pub fn run_test_vm() -> VMResult {
+    let image = default_image_path()?;
     let (ovmf_code, ovmf_vars) = fetch_ovmf()?;
     let qemu_command = build_qemu_command(image, ovmf_code, ovmf_vars, kvm_available(), true);
     run_qemu(qemu_command)

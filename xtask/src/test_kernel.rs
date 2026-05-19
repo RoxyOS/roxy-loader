@@ -2,7 +2,7 @@ use std::{path::PathBuf, process::ExitStatus};
 
 use anyhow::{Context, Result, bail};
 use escargot::CargoBuild;
-use roxy_loader_utils::build_image::{build_image, default_image_path};
+use roxy_loader_utils::build_image::build_image;
 
 use crate::run_vm::{TEST_FAILURE_EXIT_STATUS, TEST_SUCCESS_EXIT_STATUS, run_test_vm};
 
@@ -10,7 +10,7 @@ pub fn run_test_kernel() -> Result<()> {
     let artifact = build_test_kernel()?;
     build_image(artifact)?;
 
-    let status = run_test_vm(default_image_path()?)?;
+    let status = run_test_vm()?;
     process_qemu_status(status)
 }
 
