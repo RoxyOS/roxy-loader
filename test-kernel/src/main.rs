@@ -27,13 +27,10 @@ fn kernel_main(_bootinfo: &BootInfo) -> ! {
     hlt_loop()
 }
 
-#[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-    os_test_framework::handle_panic(info)
-}
-
 fn hlt_loop() -> ! {
     loop {
         hlt();
     }
 }
+
+os_test_framework::forward_panic!();
