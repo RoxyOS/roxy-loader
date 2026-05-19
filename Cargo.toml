@@ -5,6 +5,12 @@ members = ["api", "basic-kernel", "test-kernel", "utils", "xtask"]
 name = "roxy-loader"
 version = "0.1.0"
 edition = "2024"
+description = "Lightweight Rust bootloader for kernel development."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/RoxyOS/roxy-loader"
+homepage = "https://github.com/RoxyOS/roxy-loader"
+documentation = "https://docs.rs/roxy-loader"
+readme = "README.md"
 
 [dependencies]
 anyhow.workspace = true

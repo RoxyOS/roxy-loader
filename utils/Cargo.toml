@@ -2,6 +2,11 @@
 name = "roxy-loader-utils"
 version = "0.1.0"
 edition = "2024"
+description = "Host-side utilities for building and packaging roxy-loader artifacts."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/RoxyOS/roxy-loader"
+homepage = "https://github.com/RoxyOS/roxy-loader"
+documentation = "https://docs.rs/roxy-loader-utils"
 
 [dependencies]
 anyhow.workspace = true
