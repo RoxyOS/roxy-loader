@@ -10,6 +10,14 @@ If you are adapting an existing kernel to use `roxy-loader`, you can use the tem
 
 For more information, check the [README](https://github.com/RoxyOS/roxy-loader-template/blob/main/README.md) of the template repository
 
+## C Support
+
+If you want to use `roxy-loader` with a C kernel, you can refer to the
+[C template](https://github.com/RoxyOS/roxy-loader-c-template).
+
+Warning: although `roxy-loader` officially supports C kernels, it is not
+recommended. `roxy-loader` has the best support for Rust kernels.
+
 ## Interface
 
 This section assumes your kernel follows the same structure as the template repository, or that you are using the template directly.
