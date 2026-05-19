@@ -1,5 +1,6 @@
 use crate::framebuffer::Framebuffer;
 
+#[derive(Clone, Copy)]
 #[repr(C)]
 pub struct BootInfo {
     pub framebuffer: Framebuffer,

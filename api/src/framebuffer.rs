@@ -1,8 +1,15 @@
+#[derive(Clone, Copy)]
 #[repr(C)]
 pub struct Framebuffer {
-    pub ptr: *mut u8,
+    ptr: usize,
     pub size: usize,
     pub stride: usize,
+}
+
+impl Framebuffer {
+    pub fn ptr(&self) -> *mut u8 {
+        self.ptr as *mut u8
+    }
 }
 
 #[cfg(test)]

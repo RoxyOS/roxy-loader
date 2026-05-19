@@ -9,16 +9,18 @@ extern crate alloc;
 use roxy_loader_api::{bootinfo::BootInfo, kernel_entry};
 use x86_64::instructions::hlt;
 
-use crate::{allocator::init_heap, platform::TestPlatform};
+use crate::{allocator::init_heap, bootinfo::init as init_bootinfo, platform::TestPlatform};
 
 mod allocator;
+mod bootinfo;
 mod platform;
 mod serial;
 mod tests;
 
 kernel_entry!(kernel_main);
 
-fn kernel_main(_bootinfo: &BootInfo) -> ! {
+fn kernel_main(bootinfo: &BootInfo) -> ! {
+    init_bootinfo(bootinfo);
     init_heap();
     os_test_framework::init_platform(TestPlatform);
     test_main();
