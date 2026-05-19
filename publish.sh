@@ -2,6 +2,7 @@
 
 set -e
 
+cargo xtest
 cargo publish -p roxy-loader-api
 echo "waiting 10 seconds..."
 sleep 10
