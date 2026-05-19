@@ -66,11 +66,8 @@ fn build_qemu_command(
     let mut qemu_command = QemuInstanceForX86_64::builder()
         .qemu_binary(QEMU_BINARY_NAME.into())
         .drive(drives)
+        .enable_kvm(enable_kvm)
         .build();
-
-    if enable_kvm {
-        qemu_command.enable_kvm = Some(true);
-    }
 
     if test_mode {
         let mut exit_device = Device::new("isa-debug-exit");
