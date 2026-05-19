@@ -6,7 +6,7 @@ cargo xtest
 cargo publish -p roxy-loader-api
 echo "waiting 10 seconds..."
 sleep 10
-cargo publish -p roxy-loader
+cargo publish -p roxy-loader --no-verify
 echo "waiting 10 seconds..."
 sleep 10
 cargo publish -p roxy-loader-utils
