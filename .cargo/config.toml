@@ -1,4 +1,6 @@
 [alias]
+xtask = "run -p xtask --"
+
 xrun-basic-kernel = "run -p xtask run-basic-kernel"
 xbuild-basic-kernel = "run -p xtask build-basic-kernel"
 xtest = "run -p xtask test"
