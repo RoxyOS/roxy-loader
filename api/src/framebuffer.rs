@@ -1,12 +1,16 @@
+/// A framebuffer provided to the kernel at boot time.
 #[derive(Clone, Copy)]
 #[repr(C)]
 pub struct Framebuffer {
     ptr: usize,
+    /// Framebuffer size in bytes.
     pub size: usize,
+    /// Framebuffer stride.
     pub stride: usize,
 }
 
 impl Framebuffer {
+    /// Creates a framebuffer value.
     pub fn new(ptr: *mut u8, size: usize, stride: usize) -> Self {
         Self {
             ptr: ptr as usize,
@@ -15,6 +19,7 @@ impl Framebuffer {
         }
     }
 
+    /// Returns a pointer to the framebuffer memory.
     pub fn ptr(&self) -> *mut u8 {
         self.ptr as *mut u8
     }

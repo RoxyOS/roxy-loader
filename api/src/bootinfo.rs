@@ -1,8 +1,10 @@
 use crate::framebuffer::Framebuffer;
 
+/// Boot-time data provided by `roxy-loader`.
 #[derive(Clone, Copy)]
 #[repr(C)]
 pub struct BootInfo {
+    /// Framebuffer information for drawing to the screen.
     pub framebuffer: Framebuffer,
 }
 

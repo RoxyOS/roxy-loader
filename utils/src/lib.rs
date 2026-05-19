@@ -1,5 +1,8 @@
-//! Host-side utilities for building roxy-loader artifacts and disk images.
-//! This crate is intended to run on the host machine, not inside target kernels.
+#![deny(missing_docs)]
 
+//! Host-side utilities for working with `roxy-loader`.
+
+/// Utilities for building bootable disk images.
 pub mod build_image;
+/// Utilities for discovering Cargo output paths.
 pub mod utils;

@@ -1,3 +1,21 @@
+/// Defines the entry point used by kernels started with `roxy-loader`.
+///
+/// # Examples
+///
+/// ```ignore
+/// #![no_std]
+/// #![no_main]
+///
+/// use roxy_loader_api::{bootinfo::BootInfo, kernel_entry};
+///
+/// kernel_entry!(kernel_main);
+///
+/// fn kernel_main(bootinfo: &BootInfo) -> ! {
+///     let _framebuffer = bootinfo.framebuffer;
+///
+///     loop {}
+/// }
+/// ```
 #[macro_export]
 macro_rules! kernel_entry {
     ($kernel_main:ident) => {

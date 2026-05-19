@@ -1,3 +1,5 @@
+//! Helpers for producing bootable disk images for `roxy-loader`.
+
 use std::{
     env,
     fs::File,
@@ -10,12 +12,14 @@ use fatfs::{FileSystem, FormatVolumeOptions, FsOptions};
 
 use crate::utils::cargo_target_dir;
 
+/// Builds a bootable disk image for a kernel artifact.
 pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
     let image_path = default_image_path()?;
     build_image_from_paths(&image_path, &roxyloader_artifact(), &kernel_binary)?;
     Ok(image_path)
 }
 
+/// Builds a bootable disk image from explicit paths.
 pub fn build_image_from_paths(
     image_path: &Path,
     roxyloader_artifact: &Path,
@@ -53,6 +57,7 @@ pub fn build_image_from_paths(
     Ok(())
 }
 
+/// Returns the default output path used by [`build_image`].
 pub fn default_image_path() -> Result<PathBuf> {
     const IMAGE_NAME: &str = "image.img";
     Ok(cargo_target_dir()?.join(IMAGE_NAME))
