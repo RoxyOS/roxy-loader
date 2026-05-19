@@ -15,8 +15,9 @@ For more information, check the [README](https://github.com/RoxyOS/roxy-loader-t
 If you want to use `roxy-loader` with a C kernel, you can refer to the
 [C template](https://github.com/RoxyOS/roxy-loader-c-template).
 
-Warning: although `roxy-loader` officially supports C kernels, it is not
-recommended. `roxy-loader` has the best support for Rust kernels.
+> [!WARNING]
+> Although `roxy-loader` officially supports C kernels, it is not recommended.
+> `roxy-loader` has the best support for Rust kernels.
 
 ## Interface
 
