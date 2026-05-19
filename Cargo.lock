@@ -1026,7 +1026,7 @@ dependencies = [
 
 [[package]]
 name = "roxy-loader"
-version = "0.1.0"
+version = "0.1.1-alpha.1"
 dependencies = [
  "anyhow",
  "elfloader",
@@ -1036,7 +1036,7 @@ dependencies = [
 
 [[package]]
 name = "roxy-loader-api"
-version = "0.1.0"
+version = "0.1.1-alpha.1"
 dependencies = [
  "anyhow",
  "cbindgen",
@@ -1044,7 +1044,7 @@ dependencies = [
 
 [[package]]
 name = "roxy-loader-utils"
-version = "0.1.0"
+version = "0.1.1-alpha.1"
 dependencies = [
  "anyhow",
  "cargo-bin-file",

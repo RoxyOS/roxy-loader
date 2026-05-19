@@ -1,6 +1,6 @@
 [package]
 name = "roxy-loader-utils"
-version = "0.1.0"
+version = "0.1.1-alpha.1"
 edition = "2024"
 description = "Host-side utilities for building and packaging roxy-loader artifacts."
 license = "MIT OR Apache-2.0"
@@ -17,5 +17,5 @@ tap.workspace = true
 
 [build-dependencies]
 cargo-emit.workspace = true
-roxy-loader = { version = "0.1.0", path = "..", artifact = "bin", target = "x86_64-unknown-uefi" }
+roxy-loader = { version = "0.1.1-alpha.1", path = "..", artifact = "bin", target = "x86_64-unknown-uefi" }
 cargo-bin-file.workspace = true
