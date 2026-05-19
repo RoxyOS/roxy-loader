@@ -7,5 +7,6 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/RoxyOS/roxy-loader"
 homepage = "https://github.com/RoxyOS/roxy-loader"
 documentation = "https://docs.rs/roxy-loader-api"
+readme = "_crates_io_readme.md"
 
 [dependencies]
