@@ -12,7 +12,7 @@ pub enum Command {
     RunBasicKernel,
     #[command(about = "Build the basic kernel")]
     BuildBasicKernel,
-    #[command(about = "Run host-side unit tests")]
+    #[command(about = "Run host-side unit tests and target-kernel tests")]
     Test,
 }
 

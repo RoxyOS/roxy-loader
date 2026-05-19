@@ -14,6 +14,7 @@ pub mod command;
 pub mod run_basic_kernel;
 pub mod run_vm;
 pub mod test;
+pub mod test_kernel;
 pub mod utils;
 
 mod private {

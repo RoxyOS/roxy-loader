@@ -1,5 +1,5 @@
 [workspace]
-members = ["api","basic-kernel", "utils", "xtask"]
+members = ["api", "basic-kernel", "test-kernel", "utils", "xtask"]
 
 [package]
 name = "roxy-loader"
@@ -14,17 +14,24 @@ roxy-loader-api.workspace = true
 
 [workspace.dependencies]
 anyhow = { version = "1", default-features = false }
+buddy_system_allocator = "0.13"
 cargo-bin-file = "0.1"
 cargo-emit = "0.2"
 cargo_metadata = "0.23"
 clap = { version = "4", features = ["derive"] }
 elfloader = "0.16"
+escargot = { version = "0.5", features = ["test_unstable"] }
 fatfs = "0.3"
+os-test-framework = "0.3"
 ovmf-prebuilt = "0.2"
 qemu-command-builder = "11.0.0-1"
+qemu-exit = "4"
 roxy-loader-utils.path = "./utils"
 roxy-loader-api.path = "./api"
+spin = "0.10"
 tap = "1"
+uart_16550 = "0.6"
 uefi = { version = "0.37", features = ["alloc"] }
 workspace_root = "0.2"
+x86_64 = "0.15"
 xshell = "0.2"

@@ -1,0 +1,16 @@
+[package]
+name = "test-kernel"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+buddy_system_allocator.workspace = true
+os-test-framework.workspace = true
+qemu-exit.workspace = true
+roxy-loader-api.workspace = true
+spin.workspace = true
+uart_16550.workspace = true
+x86_64.workspace = true
+
+[build-dependencies]
+cargo-emit.workspace = true

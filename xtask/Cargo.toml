@@ -7,6 +7,7 @@ edition = "2024"
 anyhow.workspace = true
 cargo_metadata.workspace = true
 clap.workspace = true
+escargot.workspace = true
 workspace_root.workspace = true
 xshell.workspace = true
 roxy-loader-utils.workspace = true

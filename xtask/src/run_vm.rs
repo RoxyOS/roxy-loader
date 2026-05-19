@@ -5,18 +5,29 @@ use ovmf_prebuilt::{Arch, FileType};
 use qemu_command_builder::{
     QemuInstanceForX86_64,
     args::drive::{Drive, DriveInterface},
+    args::{device::Device, display::QemuDisplay, serial::SpecialDevice},
     common::OnOff,
 };
 
 use crate::utils::{cargo_target_dir, run_qemu};
 
 const QEMU_BINARY_NAME: &str = "qemu-system-x86_64";
+const TEST_EXIT_DEVICE_PORT: &str = "0xf4";
+const TEST_EXIT_DEVICE_SIZE: &str = "0x04";
+pub const TEST_SUCCESS_EXIT_STATUS: i32 = 33;
+pub const TEST_FAILURE_EXIT_STATUS: i32 = 35;
 
 pub type VMResult = Result<ExitStatus>;
 
 pub fn run_vm(image: PathBuf) -> VMResult {
     let (ovmf_code, ovmf_vars) = fetch_ovmf()?;
-    let qemu_command = build_qemu_command(image, ovmf_code, ovmf_vars, kvm_available());
+    let qemu_command = build_qemu_command(image, ovmf_code, ovmf_vars, kvm_available(), false);
+    run_qemu(qemu_command)
+}
+
+pub fn run_test_vm(image: PathBuf) -> VMResult {
+    let (ovmf_code, ovmf_vars) = fetch_ovmf()?;
+    let qemu_command = build_qemu_command(image, ovmf_code, ovmf_vars, kvm_available(), true);
     run_qemu(qemu_command)
 }
 
@@ -25,6 +36,7 @@ fn build_qemu_command(
     ovmf_code: PathBuf,
     ovmf_vars: PathBuf,
     enable_kvm: bool,
+    test_mode: bool,
 ) -> QemuInstanceForX86_64 {
     let code_drive = Drive::builder()
         .interface(DriveInterface::Pflash)
@@ -55,6 +67,18 @@ fn build_qemu_command(
 
     if enable_kvm {
         qemu_command.enable_kvm = Some(true);
+    }
+
+    if test_mode {
+        let mut exit_device = Device::new("isa-debug-exit");
+        exit_device.add_prop("iobase", TEST_EXIT_DEVICE_PORT);
+        exit_device.add_prop("iosize", TEST_EXIT_DEVICE_SIZE);
+
+        qemu_command.device = Some(vec![exit_device]);
+        qemu_command.serial = Some(SpecialDevice::Stdio);
+        qemu_command.display = Some(QemuDisplay::None);
+        qemu_command.monitor = Some(SpecialDevice::None);
+        qemu_command.no_reboot = Some(true);
     }
 
     qemu_command
@@ -91,6 +115,7 @@ mod tests {
             PathBuf::from("/tmp/OVMF_CODE.fd"),
             PathBuf::from("/tmp/OVMF_VARS.fd"),
             false,
+            false,
         );
 
         let argv = command.to_command();
@@ -111,9 +136,32 @@ mod tests {
             PathBuf::from("/tmp/OVMF_CODE.fd"),
             PathBuf::from("/tmp/OVMF_VARS.fd"),
             true,
+            false,
         );
 
         let argv = command.to_command();
         assert!(argv.iter().any(|arg| arg == "-enable-kvm"));
+    }
+
+    #[test]
+    fn build_qemu_command_configures_test_mode() {
+        let command = build_qemu_command(
+            PathBuf::from("/tmp/image.img"),
+            PathBuf::from("/tmp/OVMF_CODE.fd"),
+            PathBuf::from("/tmp/OVMF_VARS.fd"),
+            false,
+            true,
+        );
+
+        let argv = command.to_command();
+        let joined = argv.join(" ");
+
+        assert!(joined.contains("isa-debug-exit"));
+        assert!(joined.contains("iobase=0xf4"));
+        assert!(joined.contains("-serial stdio"));
+        assert!(joined.contains("-display none"));
+        assert!(joined.contains("-monitor none"));
+        assert!(!argv.iter().any(|arg| arg == "-nographic"));
+        assert!(argv.iter().any(|arg| arg == "-no-reboot"));
     }
 }
