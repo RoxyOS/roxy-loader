@@ -11,5 +11,5 @@ tap.workspace = true
 
 [build-dependencies]
 cargo-emit.workspace = true
-roxy-loader = { path = "..", artifact = "bin", target = "x86_64-unknown-uefi" }
+roxy-loader = { version = "0.1.0", path = "..", artifact = "bin", target = "x86_64-unknown-uefi" }
 cargo-bin-file.workspace = true

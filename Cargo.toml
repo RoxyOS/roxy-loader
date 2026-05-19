@@ -26,8 +26,8 @@ os-test-framework = "0.4"
 ovmf-prebuilt = "0.2"
 qemu-command-builder = "11.0.0-1"
 qemu-exit = "4"
-roxy-loader-utils.path = "./utils"
-roxy-loader-api.path = "./api"
+roxy-loader-utils = { version = "0.1.0", path = "./utils" }
+roxy-loader-api = { version = "0.1.0", path = "./api" }
 spin = "0.10"
 tap = "1"
 uart_16550 = "0.6"
