@@ -12,6 +12,8 @@ pub enum Command {
     RunBasicKernel,
     #[command(about = "Build the basic kernel")]
     BuildBasicKernel,
+    #[command(about = "Generate the C API for roxy-loader-api")]
+    CApi,
     #[command(about = "Run host-side unit tests and target-kernel tests")]
     Test,
 }
@@ -31,6 +33,12 @@ mod tests {
     fn parses_build_basic_kernel_command() {
         let args = Args::parse_from(["xtask", "build-basic-kernel"]);
         assert!(matches!(args.command, Command::BuildBasicKernel));
+    }
+
+    #[test]
+    fn parses_c_api_command() {
+        let args = Args::parse_from(["xtask", "c-api"]);
+        assert!(matches!(args.command, Command::CApi));
     }
 
     #[test]

@@ -10,3 +10,7 @@ documentation = "https://docs.rs/roxy-loader-api"
 readme = "_crates_io_readme.md"
 
 [dependencies]
+
+[dev-dependencies]
+anyhow.workspace = true
+cbindgen.workspace = true

@@ -6,6 +6,7 @@ publish = false
 
 [dependencies]
 anyhow.workspace = true
+cbindgen.workspace = true
 cargo_metadata.workspace = true
 clap.workspace = true
 escargot.workspace = true
