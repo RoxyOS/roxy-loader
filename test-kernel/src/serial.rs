@@ -1,7 +1,7 @@
-use core::fmt::{self, Arguments, Write};
+use core::fmt::{Arguments, Write};
 
 use spin::{Lazy, Mutex};
-use uart_16550::{Config, Uart16550, Uart16550Tty, backend::PioBackend};
+use uart_16550::{Config, Uart16550Tty, backend::PioBackend};
 
 const SERIAL_PORT: u16 = 0x3f8;
 

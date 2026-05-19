@@ -6,8 +6,6 @@
 
 extern crate alloc;
 
-use core::panic::PanicInfo;
-
 use roxy_loader_api::{bootinfo::BootInfo, kernel_entry};
 use x86_64::instructions::hlt;
 

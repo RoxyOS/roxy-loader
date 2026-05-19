@@ -2,7 +2,6 @@ use core::fmt;
 
 use os_test_framework::{ExitState, Platform};
 use qemu_exit::{QEMUExit, X86};
-use x86_64::instructions::hlt;
 
 use crate::serial::serial_print;
 
