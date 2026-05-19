@@ -1,10 +1,13 @@
 use crate::framebuffer::Framebuffer;
 
 /// Boot-time data provided by `roxy-loader`.
+///
+/// This is the main value passed to the kernel entry point. It groups together
+/// the information a kernel can use immediately after startup.
 #[derive(Clone, Copy)]
 #[repr(C)]
 pub struct BootInfo {
-    /// Framebuffer information for drawing to the screen.
+    /// Information about the framebuffer that the kernel can draw to.
     pub framebuffer: Framebuffer,
 }
 

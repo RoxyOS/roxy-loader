@@ -1,4 +1,7 @@
 //! Helpers for producing bootable disk images for `roxy-loader`.
+//!
+//! The functions in this module are intended for host-side build tools that
+//! need to prepare a disk image containing the loader and a kernel binary.
 
 use std::{
     env,
@@ -20,6 +23,35 @@ pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
 }
 
 /// Builds a bootable disk image from explicit paths.
+///
+/// Use this when you want full control over the image path, loader path, or
+/// kernel path.
+///
+/// # Examples
+///
+/// ```
+/// use roxy_loader_utils::build_image::build_image_from_paths;
+///
+/// let temp = std::env::temp_dir().join(format!(
+///     "roxy-loader-doc-{}",
+///     std::process::id()
+/// ));
+/// std::fs::create_dir_all(&temp)?;
+///
+/// let image = temp.join("image.img");
+/// let loader = temp.join("loader.efi");
+/// let kernel = temp.join("kernel.bin");
+///
+/// std::fs::write(&loader, b"loader")?;
+/// std::fs::write(&kernel, b"kernel")?;
+///
+/// build_image_from_paths(&image, &loader, &kernel)?;
+///
+/// assert!(image.exists());
+///
+/// std::fs::remove_dir_all(&temp)?;
+/// # Ok::<(), Box<dyn std::error::Error>>(())
+/// ```
 pub fn build_image_from_paths(
     image_path: &Path,
     roxyloader_artifact: &Path,

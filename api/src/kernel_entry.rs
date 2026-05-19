@@ -1,5 +1,9 @@
 /// Defines the entry point used by kernels started with `roxy-loader`.
 ///
+/// Use this macro in the crate that contains your kernel entry function.
+/// It connects your function to the startup convention expected by
+/// `roxy-loader`.
+///
 /// # Examples
 ///
 /// ```ignore

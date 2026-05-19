@@ -1,11 +1,14 @@
 /// A framebuffer provided to the kernel at boot time.
+///
+/// Kernels can use this value to find the framebuffer memory and understand its
+/// basic layout.
 #[derive(Clone, Copy)]
 #[repr(C)]
 pub struct Framebuffer {
     ptr: usize,
-    /// Framebuffer size in bytes.
+    /// The total size of the framebuffer in bytes.
     pub size: usize,
-    /// Framebuffer stride.
+    /// The number of pixels in each row of the framebuffer.
     pub stride: usize,
 }
 
