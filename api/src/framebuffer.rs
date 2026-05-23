@@ -18,6 +18,8 @@ pub struct Framebuffer {
     pub width: usize,
     /// Height of the framebuffer in pixels.
     pub height: usize,
+    /// Bytes each pixel will take on the framebuffer.
+    pub bytes_per_pixel: usize,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -49,6 +51,7 @@ impl Framebuffer {
         stride: usize,
         pixel_format: impl Into<PixelFormat>,
         resolution: Resolution,
+        bytes_per_pixel: usize,
     ) -> Self {
         let (width, height) = resolution;
 
@@ -57,6 +60,7 @@ impl Framebuffer {
             size,
             stride,
             width,
+            bytes_per_pixel,
             height,
             pixel_format: pixel_format.into(),
         }
