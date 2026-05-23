@@ -76,7 +76,7 @@ impl Framebuffer {
 
 #[cfg(test)]
 mod tests {
-    use super::Framebuffer;
+    use super::{Framebuffer, PixelFormat};
     use core::{
         mem::{MaybeUninit, align_of, size_of},
         ptr::addr_of,
@@ -84,11 +84,10 @@ mod tests {
 
     #[test]
     fn layout_is_stable() {
-        assert_eq!(
-            size_of::<Framebuffer>(),
-            size_of::<(*mut u8, usize, usize)>()
-        );
+        assert_eq!(size_of::<Framebuffer>(), 48);
         assert_eq!(align_of::<Framebuffer>(), align_of::<usize>());
+        assert_eq!(size_of::<PixelFormat>(), 4);
+        assert_eq!(align_of::<PixelFormat>(), 4);
 
         let framebuffer = MaybeUninit::<Framebuffer>::uninit();
         let base = framebuffer.as_ptr();
@@ -98,11 +97,23 @@ mod tests {
             assert_eq!(addr_of!((*base).ptr) as usize - base as usize, 0);
             assert_eq!(
                 addr_of!((*base).size) as usize - base as usize,
-                size_of::<*mut u8>()
+                size_of::<usize>()
             );
             assert_eq!(
                 addr_of!((*base).stride) as usize - base as usize,
-                size_of::<*mut u8>() + size_of::<usize>()
+                size_of::<usize>() * 2
+            );
+            assert_eq!(
+                addr_of!((*base).pixel_format) as usize - base as usize,
+                size_of::<usize>() * 3
+            );
+            assert_eq!(
+                addr_of!((*base).width) as usize - base as usize,
+                size_of::<usize>() * 4
+            );
+            assert_eq!(
+                addr_of!((*base).height) as usize - base as usize,
+                size_of::<usize>() * 5
             );
         }
     }
