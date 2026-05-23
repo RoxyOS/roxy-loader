@@ -889,9 +889,9 @@ checksum = "384b8ab6d37215f3c5301a95a4accb5d64aa607f1fcb26a11b5303878451b4fe"
 
 [[package]]
 name = "os-test-framework"
-version = "0.4.0"
+version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bcd0d2fb6eba8390ff34430b5e1bbdae72ff5dda500d0c9241f0391cc8839f7c"
+checksum = "f60566019a604a05ef30f3edb87a6ce609e7dd7b87457cd876ad439210b1d93a"
 dependencies = [
  "owo-colors",
  "spin",

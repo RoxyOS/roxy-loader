@@ -29,7 +29,7 @@ clap = { version = "4", features = ["derive"] }
 elfloader = "0.16"
 escargot = { version = "0.5", features = ["test_unstable"] }
 fatfs = "0.3"
-os-test-framework = "0.4"
+os-test-framework = "0.5"
 ovmf-prebuilt = "0.2"
 qemu-command-builder = "11.0.0-1"
 qemu-exit = "4"
