@@ -1,3 +1,5 @@
+use uefi::proto::{console::gop::PixelFormat as UefiPixelFormat, pi};
+
 /// A framebuffer provided to the kernel at boot time.
 ///
 /// Kernels can use this value to find the framebuffer memory and understand its
@@ -10,15 +12,41 @@ pub struct Framebuffer {
     pub size: usize,
     /// The number of pixels in each row of the framebuffer.
     pub stride: usize,
+    pub pixel_format: PixelFormat,
+}
+
+#[derive(Clone, Copy, Debug)]
+pub enum PixelFormat {
+    Rgb,
+    Bgr,
+    Bitmask,
+    BltOnly,
+}
+
+impl From<UefiPixelFormat> for PixelFormat {
+    fn from(value: UefiPixelFormat) -> Self {
+        match value {
+            UefiPixelFormat::Rgb => Self::Rgb,
+            UefiPixelFormat::Bgr => Self::Bgr,
+            UefiPixelFormat::Bitmask => Self::Bitmask,
+            UefiPixelFormat::BltOnly => Self::BltOnly,
+        }
+    }
 }
 
 impl Framebuffer {
     /// Creates a framebuffer value.
-    pub fn new(ptr: *mut u8, size: usize, stride: usize) -> Self {
+    pub fn new(
+        ptr: *mut u8,
+        size: usize,
+        stride: usize,
+        pixel_format: impl Into<PixelFormat>,
+    ) -> Self {
         Self {
             ptr: ptr as usize,
             size,
             stride,
+            pixel_format: pixel_format.into(),
         }
     }
 
