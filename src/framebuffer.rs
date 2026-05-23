@@ -16,6 +16,5 @@ pub fn new_framebuffer() -> Result<Framebuffer> {
         mode.stride(),
         mode.pixel_format(),
         mode.resolution(),
-        4,
     ))
 }
