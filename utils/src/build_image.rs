@@ -10,7 +10,7 @@ use std::{
 };
 
 use anyhow::Result;
-use cargo_artifact_dependency::{ArtifactDependencyBuilder, BuildProfile};
+use cargo_artifact_dependency::ArtifactDependencyBuilder;
 use fatfs::{FileSystem, FormatVolumeOptions, FsOptions};
 use workspace_root::get_workspace_root;
 
