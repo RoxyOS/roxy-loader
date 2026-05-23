@@ -1,5 +1,4 @@
 #![no_std]
-#![deny(missing_docs)]
 
 //! Kernel-facing types and macros for use with `roxy-loader`.
 //!
