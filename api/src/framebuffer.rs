@@ -21,6 +21,7 @@ pub struct Framebuffer {
 }
 
 #[derive(Clone, Copy, Debug)]
+#[repr(C)]
 pub enum PixelFormat {
     Rgb,
     Bgr,
