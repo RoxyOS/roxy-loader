@@ -1,6 +1,6 @@
 use anyhow::Result;
-use roxy_loader_api::framebuffer::{Framebuffer, PixelFormat};
-use uefi::proto::console::gop::{GraphicsOutput, PixelFormat as UefiPixelFormat};
+use roxy_loader_api::framebuffer::Framebuffer;
+use uefi::proto::console::gop::GraphicsOutput;
 
 use crate::utils::get_and_open_protocol;
 
