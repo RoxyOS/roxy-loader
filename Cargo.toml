@@ -3,7 +3,7 @@ members = ["api", "basic-kernel", "test-kernel", "utils", "xtask"]
 
 [package]
 name = "roxy-loader"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2024"
 description = "Lightweight Rust bootloader for kernel development."
 license = "MIT OR Apache-2.0"
@@ -34,7 +34,7 @@ ovmf-prebuilt = "0.2"
 qemu-command-builder = "11.0.0-1"
 qemu-exit = "4"
 roxy-loader-utils = { version = "0.1.5", path = "./utils", features = ["local-dev"] }
-roxy-loader-api = { version = "0.1.5", path = "./api" }
+roxy-loader-api = { version = "0.1.6", path = "./api" }
 spin = "0.10"
 tap = "1"
 uart_16550 = "0.6"

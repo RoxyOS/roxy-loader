@@ -1,6 +1,6 @@
 [package]
 name = "roxy-loader-utils"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2024"
 description = "Host-side utilities for building and packaging roxy-loader artifacts."
 license = "MIT OR Apache-2.0"
