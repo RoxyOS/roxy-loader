@@ -43,3 +43,34 @@ pub fn chdir_to_workspace_root() -> Result<()> {
     Shell::new()?.change_dir(workspace_root);
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use std::collections::BTreeMap;
+
+    use super::*;
+
+    #[test]
+    fn publishable_workspace_crates_have_the_same_version() -> Result<()> {
+        let metadata = cargo_metadata()?;
+        let workspace_packages = metadata.workspace_packages();
+        let versions = workspace_packages
+            .iter()
+            .filter(|package| package.publish.as_ref().is_none_or(|publish| !publish.is_empty()))
+            .fold(BTreeMap::new(), |mut versions, package| {
+                versions
+                    .entry(package.version.to_string())
+                    .or_insert_with(Vec::new)
+                    .push(package.name.to_string());
+                versions
+            });
+
+        assert_eq!(
+            versions.len(),
+            1,
+            "publishable workspace crates must share one version: {versions:#?}"
+        );
+
+        Ok(())
+    }
+}
