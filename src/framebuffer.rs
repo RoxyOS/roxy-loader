@@ -15,5 +15,6 @@ pub fn new_framebuffer() -> Result<Framebuffer> {
         fb.size(),
         mode.stride(),
         mode.pixel_format(),
+        mode.resolution(),
     ))
 }

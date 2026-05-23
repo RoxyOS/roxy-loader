@@ -13,6 +13,8 @@ pub struct Framebuffer {
     /// The number of pixels in each row of the framebuffer.
     pub stride: usize,
     pub pixel_format: PixelFormat,
+    pub width: usize,
+    pub height: usize,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -34,6 +36,8 @@ impl From<UefiPixelFormat> for PixelFormat {
     }
 }
 
+type Resolution = (usize, usize);
+
 impl Framebuffer {
     /// Creates a framebuffer value.
     pub fn new(
@@ -41,11 +45,16 @@ impl Framebuffer {
         size: usize,
         stride: usize,
         pixel_format: impl Into<PixelFormat>,
+        resolution: Resolution,
     ) -> Self {
+        let (width, height) = resolution;
+
         Self {
             ptr: ptr as usize,
             size,
             stride,
+            width,
+            height,
             pixel_format: pixel_format.into(),
         }
     }
