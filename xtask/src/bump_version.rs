@@ -11,7 +11,11 @@ pub fn bump_version(new_version: &str) -> Result<()> {
 
     update_text_file(
         workspace_root.join("Cargo.toml"),
-        &[("version = \"", "\"")],
+        &[
+            ("version = \"", "\""),
+            ("roxy-loader-utils = { version = \"", "\""),
+            ("roxy-loader-api = { version = \"", "\""),
+        ],
         new_version,
     )?;
     update_text_file(
