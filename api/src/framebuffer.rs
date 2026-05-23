@@ -12,8 +12,11 @@ pub struct Framebuffer {
     pub size: usize,
     /// The number of pixels in each row of the framebuffer.
     pub stride: usize,
+    /// Pixel format of the framebuffer.
     pub pixel_format: PixelFormat,
+    /// Width of the framebuffer in pixels.
     pub width: usize,
+    /// Height of the framebuffer in pixels.
     pub height: usize,
 }
 
