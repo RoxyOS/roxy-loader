@@ -1,6 +1,6 @@
 [package]
 name = "roxy-loader-api"
-version = "0.1.6"
+version = "0.2.0"
 edition = "2024"
 description = "Kernel-facing API types and macros for roxy-loader."
 license = "MIT OR Apache-2.0"
