@@ -8,7 +8,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-typedef struct PixelFormat PixelFormat;
+typedef enum PixelFormat {
+  Rgb,
+  Bgr,
+  Bitmask,
+  BltOnly,
+} PixelFormat;
 
 /**
  * A framebuffer provided to the kernel at boot time.
@@ -29,7 +34,7 @@ typedef struct Framebuffer {
   /**
    * Pixel format of the framebuffer.
    */
-  struct PixelFormat pixel_format;
+  enum PixelFormat pixel_format;
   /**
    * Width of the framebuffer in pixels.
    */
