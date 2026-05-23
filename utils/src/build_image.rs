@@ -17,7 +17,7 @@ use fatfs::{FileSystem, FormatVolumeOptions, FsOptions};
 
 use crate::utils::cargo_target_dir;
 
-const ROXY_LOADER_ARTIFACT_VERSION: &str = "0.2.1";
+const ROXY_LOADER_ARTIFACT_VERSION: &str = "0.2.2";
 
 /// Builds a bootable disk image for a kernel artifact.
 pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
