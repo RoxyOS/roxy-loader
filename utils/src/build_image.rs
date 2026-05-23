@@ -3,6 +3,8 @@
 //! The functions in this module are intended for host-side build tools that
 //! need to prepare a disk image containing the loader and a kernel binary.
 
+#![allow(unused_mut)]
+
 use std::{
     fs::File,
     io::{self, Seek, SeekFrom},
