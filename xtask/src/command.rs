@@ -4,7 +4,7 @@ pub struct Args {
     pub command: Command,
 }
 
-#[derive(clap::Subcommand, Debug, Clone, Copy)]
+#[derive(clap::Subcommand, Debug, Clone)]
 pub enum Command {
     #[command(
         about = "Build and run the basic kernel, used to check the bootloader starts correctly"
@@ -18,6 +18,11 @@ pub enum Command {
     Test,
     #[command(about = "Publish the workspace crates in release order")]
     Publish,
+    #[command(about = "Update workspace versions and run validation")]
+    BumpVersion {
+        #[arg(value_name = "NEW_VERSION")]
+        new_version: String,
+    },
 }
 
 #[cfg(test)]
@@ -53,5 +58,14 @@ mod tests {
     fn parses_publish_command() {
         let args = Args::parse_from(["xtask", "publish"]);
         assert!(matches!(args.command, Command::Publish));
+    }
+
+    #[test]
+    fn parses_bump_version_command() {
+        let args = Args::parse_from(["xtask", "bump-version", "1.2.3"]);
+        assert!(matches!(
+            args.command,
+            Command::BumpVersion { ref new_version } if new_version == "1.2.3"
+        ));
     }
 }

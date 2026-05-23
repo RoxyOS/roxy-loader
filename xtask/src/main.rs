@@ -2,6 +2,7 @@ use anyhow::Result;
 use clap::Parser;
 
 use crate::{
+    bump_version::bump_version,
     build_basic_kernel::build_basic_kernel,
     c_api::generate_c_api,
     command::{Args, Command},
@@ -12,6 +13,7 @@ use crate::{
 };
 
 pub mod build_basic_kernel;
+pub mod bump_version;
 pub mod c_api;
 pub mod command;
 pub mod run_basic_kernel;
@@ -36,6 +38,7 @@ fn main() -> Result<()> {
         Command::CApi => generate_c_api()?,
         Command::Test => test()?,
         Command::Publish => publish()?,
+        Command::BumpVersion { new_version } => bump_version(&new_version)?,
     }
 
     Ok(())
