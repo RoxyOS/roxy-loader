@@ -218,9 +218,9 @@ dependencies = [
 
 [[package]]
 name = "cargo-artifact-dependency"
-version = "0.3.1"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8f4a2ffd79dbffb5f54d2df727873d047027f2a57cf9d1cb0293ceb9f6bea7de"
+checksum = "ec6d250e28d35ed89011d3a2c91e78997685f728c0b0490b3bd93cdee4ae8457"
 dependencies = [
  "apply_if",
  "cargo-install",

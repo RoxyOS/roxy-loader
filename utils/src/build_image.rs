@@ -12,9 +12,8 @@ use std::{
 use anyhow::Result;
 use cargo_artifact_dependency::ArtifactDependencyBuilder;
 use fatfs::{FileSystem, FormatVolumeOptions, FsOptions};
-use workspace_root::get_workspace_root;
 
-use crate::utils::cargo_target_dir;
+use crate::utils::{cargo_target_dir, static_workspace_root};
 
 const ROXY_LOADER_ARTIFACT_VERSION: &str = "0.1.4";
 
@@ -110,7 +109,9 @@ fn open_image(path: &Path) -> Result<File> {
 fn roxyloader_artifact() -> Result<PathBuf> {
     Ok(ArtifactDependencyBuilder::default()
         .crate_name("roxy-loader")
-        .path(get_workspace_root())
+        // Use staticly evaluated workspace root to prevent it from getting the
+        // crate user's workspace root
+        .path(static_workspace_root())
         .version(ROXY_LOADER_ARTIFACT_VERSION)
         .target("x86_64-unknown-uefi")
         .build()?
@@ -119,6 +120,8 @@ fn roxyloader_artifact() -> Result<PathBuf> {
 
 #[cfg(test)]
 mod tests {
+    use workspace_root::get_workspace_root;
+
     use super::*;
     use std::{
         io::Read,
