@@ -16,7 +16,7 @@ use workspace_root::get_workspace_root;
 
 use crate::utils::cargo_target_dir;
 
-const ROXY_LOADER_ARTIFACT_VERSION: &str = "0.1.3";
+const ROXY_LOADER_ARTIFACT_VERSION: &str = "0.1.4";
 
 /// Builds a bootable disk image for a kernel artifact.
 pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
