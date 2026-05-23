@@ -27,23 +27,7 @@ This section assumes your kernel follows the same structure as the template repo
 
 The framebuffer is available as `bootinfo.framebuffer`.
 
-It currently provides:
-
-- `ptr()`: returns the framebuffer base pointer as `*mut u8`
-- `size`: total framebuffer size in bytes
-- `stride`: framebuffer stride
-
-Example:
-
-```rust
-unsafe {
-    let ptr = bootinfo.framebuffer.ptr();
-
-    for i in 0..bootinfo.framebuffer.size {
-        ptr.add(i).write_volatile(0);
-    }
-}
-```
+See [docs](https://docs.rs/roxy-loader-api/latest/roxy_loader_api/framebuffer/index.html) for more information.
 
 ### Memory Map
 
