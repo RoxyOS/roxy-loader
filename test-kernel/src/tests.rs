@@ -1,4 +1,5 @@
 use os_test_framework::test;
+use roxy_loader_api::framebuffer::PixelFormat;
 
 use crate::bootinfo::bootinfo;
 
@@ -21,6 +22,19 @@ fn framebuffer_is_mapped_and_writable() {
     assert!(!ptr.is_null());
     assert!(framebuffer.size > 0);
     assert!(framebuffer.stride > 0);
+    assert!(framebuffer.width > 0);
+    assert!(framebuffer.height > 0);
+    assert!(framebuffer.stride >= framebuffer.width);
+    assert_eq!(framebuffer.bytes_per_pixel(), 4);
+    assert_eq!(
+        framebuffer.size % (framebuffer.stride * framebuffer.height),
+        0
+    );
+
+    match framebuffer.pixel_format {
+        PixelFormat::Rgb | PixelFormat::Bgr | PixelFormat::Bitmask => {}
+        PixelFormat::BltOnly => panic!("BltOnly does not provide a writable framebuffer"),
+    }
 
     unsafe {
         let first = ptr;
