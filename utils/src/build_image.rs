@@ -16,6 +16,8 @@ use workspace_root::get_workspace_root;
 
 use crate::utils::cargo_target_dir;
 
+const ROXY_LOADER_ARTIFACT_VERSION: &str = "0.1.2";
+
 /// Builds a bootable disk image for a kernel artifact.
 pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
     let image_path = default_image_path()?;
@@ -109,7 +111,7 @@ fn roxyloader_artifact() -> Result<PathBuf> {
     Ok(ArtifactDependencyBuilder::default()
         .crate_name("roxy-loader")
         .path(get_workspace_root())
-        .version("0.1.2")
+        .version(ROXY_LOADER_ARTIFACT_VERSION)
         .target("x86_64-unknown-uefi")
         .build()?
         .resolve()?)
@@ -136,6 +138,45 @@ mod tests {
 
         std::fs::create_dir_all(&dir)?;
         Ok(dir)
+    }
+
+    #[test]
+    fn roxyloader_artifact_version_matches_package_version() -> Result<()> {
+        let metadata = cargo_metadata::MetadataCommand::new()
+            .manifest_path(get_workspace_root().join("Cargo.toml"))
+            .exec()?;
+        let package = metadata
+            .packages
+            .iter()
+            .find(|package| package.name == "roxy-loader")
+            .expect("workspace should contain the roxy-loader package");
+
+        assert_eq!(
+            ROXY_LOADER_ARTIFACT_VERSION,
+            package.version.to_string(),
+            "update ROXY_LOADER_ARTIFACT_VERSION when bumping roxy-loader"
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn roxyloader_artifact_resolves_to_valid_file() -> Result<()> {
+        let artifact_path = roxyloader_artifact()?;
+        let metadata = std::fs::metadata(&artifact_path)?;
+
+        assert!(
+            metadata.is_file(),
+            "roxy-loader artifact path should be a file: {}",
+            artifact_path.display()
+        );
+        assert!(
+            metadata.len() > 0,
+            "roxy-loader artifact should not be empty: {}",
+            artifact_path.display()
+        );
+
+        Ok(())
     }
 
     #[test]
