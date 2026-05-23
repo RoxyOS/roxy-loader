@@ -1,4 +1,4 @@
-use uefi::proto::{console::gop::PixelFormat as UefiPixelFormat, pi};
+use uefi::proto::console::gop::PixelFormat as UefiPixelFormat;
 
 /// A framebuffer provided to the kernel at boot time.
 ///
