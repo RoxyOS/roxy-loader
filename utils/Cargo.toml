@@ -12,6 +12,7 @@ readme = "_crates_io_readme.md"
 [features]
 default = []
 # Enable for local roxy-loader development.
+# Adds local path for roxy-loader artifact dependency.
 local-dev = []
 
 [dependencies]
