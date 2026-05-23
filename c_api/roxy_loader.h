@@ -8,6 +8,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+typedef struct PixelFormat PixelFormat;
+
 /**
  * A framebuffer provided to the kernel at boot time.
  *
@@ -24,6 +26,18 @@ typedef struct Framebuffer {
    * The number of pixels in each row of the framebuffer.
    */
   uintptr_t stride;
+  /**
+   * Pixel format of the framebuffer.
+   */
+  struct PixelFormat pixel_format;
+  /**
+   * Width of the framebuffer in pixels.
+   */
+  uintptr_t width;
+  /**
+   * Height of the framebuffer in pixels.
+   */
+  uintptr_t height;
 } Framebuffer;
 
 /**
