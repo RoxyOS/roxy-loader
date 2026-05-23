@@ -21,8 +21,8 @@ roxy-loader-api.workspace = true
 [workspace.dependencies]
 anyhow = { version = "1", default-features = false }
 buddy_system_allocator = "0.13"
-cargo-bin-file = "0.1"
 cargo-emit = "0.2"
+cargo-artifact-dependency = "0.3"
 cbindgen = "0.29"
 cargo_metadata = "0.23"
 clap = { version = "4", features = ["derive"] }

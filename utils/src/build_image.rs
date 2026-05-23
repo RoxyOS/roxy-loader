@@ -4,21 +4,22 @@
 //! need to prepare a disk image containing the loader and a kernel binary.
 
 use std::{
-    env,
     fs::File,
     io::{self, Seek, SeekFrom},
     path::{Path, PathBuf},
 };
 
 use anyhow::Result;
+use cargo_artifact_dependency::{ArtifactDependencyBuilder, BuildProfile};
 use fatfs::{FileSystem, FormatVolumeOptions, FsOptions};
+use workspace_root::get_workspace_root;
 
 use crate::utils::cargo_target_dir;
 
 /// Builds a bootable disk image for a kernel artifact.
 pub fn build_image(kernel_binary: PathBuf) -> Result<PathBuf> {
     let image_path = default_image_path()?;
-    build_image_from_paths(&image_path, &roxyloader_artifact(), &kernel_binary)?;
+    build_image_from_paths(&image_path, &roxyloader_artifact()?, &kernel_binary)?;
     Ok(image_path)
 }
 
@@ -104,8 +105,14 @@ fn open_image(path: &Path) -> Result<File> {
         .open(path)?)
 }
 
-fn roxyloader_artifact() -> PathBuf {
-    env!("ROXYLOADER_ARTIFACT").into()
+fn roxyloader_artifact() -> Result<PathBuf> {
+    Ok(ArtifactDependencyBuilder::default()
+        .crate_name("roxy-loader")
+        .path(get_workspace_root())
+        .version("0.1")
+        .target("x86_64-unknown-uefi")
+        .build()?
+        .resolve()?)
 }
 
 #[cfg(test)]
