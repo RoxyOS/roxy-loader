@@ -20,7 +20,7 @@ pub struct Framebuffer {
     pub height: usize,
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[repr(C)]
 pub enum PixelFormat {
     Rgb,
@@ -116,5 +116,45 @@ mod tests {
                 size_of::<usize>() * 5
             );
         }
+    }
+
+    #[test]
+    fn new_preserves_framebuffer_metadata() {
+        let ptr = 0x1000 as *mut u8;
+        let framebuffer = Framebuffer::new(ptr, 800 * 600 * 4, 800, PixelFormat::Bgr, (800, 600));
+
+        assert_eq!(framebuffer.ptr(), ptr);
+        assert_eq!(framebuffer.size, 800 * 600 * 4);
+        assert_eq!(framebuffer.stride, 800);
+        assert_eq!(framebuffer.pixel_format, PixelFormat::Bgr);
+        assert_eq!(framebuffer.width, 800);
+        assert_eq!(framebuffer.height, 600);
+    }
+
+    #[test]
+    fn bytes_per_pixel_uses_stride_height_and_size() {
+        let framebuffer = Framebuffer::new(
+            core::ptr::null_mut(),
+            1024 * 768 * 4,
+            1024,
+            PixelFormat::Rgb,
+            (800, 768),
+        );
+
+        assert_eq!(framebuffer.bytes_per_pixel(), 4);
+    }
+
+    #[test]
+    fn converts_uefi_pixel_formats() {
+        assert_eq!(PixelFormat::from(UefiPixelFormat::Rgb), PixelFormat::Rgb);
+        assert_eq!(PixelFormat::from(UefiPixelFormat::Bgr), PixelFormat::Bgr);
+        assert_eq!(
+            PixelFormat::from(UefiPixelFormat::Bitmask),
+            PixelFormat::Bitmask
+        );
+        assert_eq!(
+            PixelFormat::from(UefiPixelFormat::BltOnly),
+            PixelFormat::BltOnly
+        );
     }
 }
