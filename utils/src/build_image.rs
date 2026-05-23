@@ -109,7 +109,7 @@ fn roxyloader_artifact() -> Result<PathBuf> {
     Ok(ArtifactDependencyBuilder::default()
         .crate_name("roxy-loader")
         .path(get_workspace_root())
-        .version("0.1")
+        .version("0.1.2")
         .target("x86_64-unknown-uefi")
         .build()?
         .resolve()?)
