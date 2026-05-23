@@ -1,3 +1,5 @@
+use std::{thread::sleep, time::Duration};
+
 use anyhow::Result;
 use xshell::{Shell, cmd};
 
@@ -28,5 +30,5 @@ fn run_publish(package: &str, extra_args: &[&str]) -> Result<()> {
 
 fn wait_for_publish() {
     println!("waiting 10 seconds...");
-    std::thread::sleep(std::time::Duration::from_secs(10));
+    sleep(Duration::from_secs(10));
 }
