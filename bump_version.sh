@@ -25,4 +25,4 @@ perl -0pi -e 's/(const ROXY_LOADER_ARTIFACT_VERSION: &str = ")[^"]+(";)/$1$ENV{N
 
 cargo metadata --format-version=1 >/dev/null
 cargo test -p xtask
-cargo test -p roxy-loader-utils
+cargo test -p roxy-loader-utils --features local-dev
