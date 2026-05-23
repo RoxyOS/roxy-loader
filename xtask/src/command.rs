@@ -16,6 +16,8 @@ pub enum Command {
     CApi,
     #[command(about = "Run host-side unit tests and target-kernel tests")]
     Test,
+    #[command(about = "Publish the workspace crates in release order")]
+    Publish,
 }
 
 #[cfg(test)]
@@ -45,5 +47,11 @@ mod tests {
     fn parses_xtest_command() {
         let args = Args::parse_from(["xtask", "test"]);
         assert!(matches!(args.command, Command::Test));
+    }
+
+    #[test]
+    fn parses_publish_command() {
+        let args = Args::parse_from(["xtask", "publish"]);
+        assert!(matches!(args.command, Command::Publish));
     }
 }
