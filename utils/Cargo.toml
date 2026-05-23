@@ -9,6 +9,11 @@ homepage = "https://github.com/RoxyOS/roxy-loader"
 documentation = "https://docs.rs/roxy-loader-utils"
 readme = "_crates_io_readme.md"
 
+[features]
+default = []
+# Enable for local roxy-loader development.
+local-dev = []
+
 [dependencies]
 anyhow.workspace = true
 cargo-artifact-dependency.workspace = true

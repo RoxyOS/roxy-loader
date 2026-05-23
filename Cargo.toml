@@ -33,7 +33,7 @@ os-test-framework = "0.5"
 ovmf-prebuilt = "0.2"
 qemu-command-builder = "11.0.0-1"
 qemu-exit = "4"
-roxy-loader-utils = { version = "0.1.5", path = "./utils" }
+roxy-loader-utils = { version = "0.1.5", path = "./utils", features = ["local-dev"] }
 roxy-loader-api = { version = "0.1.5", path = "./api" }
 spin = "0.10"
 tap = "1"
