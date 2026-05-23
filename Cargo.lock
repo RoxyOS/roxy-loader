@@ -1116,7 +1116,7 @@ dependencies = [
 
 [[package]]
 name = "roxy-loader"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "anyhow",
  "elfloader",
@@ -1134,7 +1134,7 @@ dependencies = [
 
 [[package]]
 name = "roxy-loader-utils"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "anyhow",
  "cargo-artifact-dependency",

@@ -3,7 +3,7 @@ members = ["api", "basic-kernel", "test-kernel", "utils", "xtask"]
 
 [package]
 name = "roxy-loader"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2024"
 description = "Lightweight Rust bootloader for kernel development."
 license = "MIT OR Apache-2.0"
