@@ -16,8 +16,8 @@ if [[ ! "$new_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.+][0-9A-Za-z.-]+)?$ ]]; the
 fi
 
 perl -0pi -e 's/(\[package\]\nname = "roxy-loader"\nversion = ")[^"]+(")/$1$ENV{NEW_VERSION}$2/' Cargo.toml
-perl -0pi -e 's/(roxy-loader-utils = \{ version = ")[^"]+(", path = "\.\/utils" \})/$1$ENV{NEW_VERSION}$2/' Cargo.toml
-perl -0pi -e 's/(roxy-loader-api = \{ version = ")[^"]+(", path = "\.\/api" \})/$1$ENV{NEW_VERSION}$2/' Cargo.toml
+perl -0pi -e 's/(roxy-loader-utils = \{ version = ")[^"]+(")/$1$ENV{NEW_VERSION}$2/' Cargo.toml
+perl -0pi -e 's/(roxy-loader-api = \{ version = ")[^"]+(")/$1$ENV{NEW_VERSION}$2/' Cargo.toml
 
 perl -0pi -e 's/(\[package\]\nname = "roxy-loader-api"\nversion = ")[^"]+(")/$1$ENV{NEW_VERSION}$2/' api/Cargo.toml
 perl -0pi -e 's/(\[package\]\nname = "roxy-loader-utils"\nversion = ")[^"]+(")/$1$ENV{NEW_VERSION}$2/' utils/Cargo.toml
