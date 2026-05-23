@@ -81,6 +81,7 @@ mod tests {
         mem::{MaybeUninit, align_of, size_of},
         ptr::addr_of,
     };
+    use uefi::proto::console::gop::PixelFormat as UefiPixelFormat;
 
     #[test]
     fn layout_is_stable() {
