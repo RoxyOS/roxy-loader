@@ -15,7 +15,7 @@ readme = "README.md"
 [dependencies]
 anyhow.workspace = true
 elfloader.workspace = true
-uefi.workspace = true
+uefi = { workspace = true, features = ["alloc"] }
 roxy-loader-api.workspace = true
 
 [workspace.dependencies]
@@ -38,7 +38,7 @@ roxy-loader-api = { version = "0.2.2", path = "./api" }
 spin = "0.10"
 tap = "1"
 uart_16550 = "0.6"
-uefi = { version = "0.37", features = ["alloc"] }
+uefi = { version = "0.37", default-features = false }
 workspace_root = "0.2"
 x86_64 = "0.15"
 xshell = "0.2"
